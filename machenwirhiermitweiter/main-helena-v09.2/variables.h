@@ -1,20 +1,19 @@
-
-BohleBots igitBot = BohleBots();
+IGITBot igitBot = IGITBot();
 
 Pixy2I2C pixy;
 
 #define MAX_SPEED 60
 
-boolean ball_seen = false;
-int ballDir = 0;
+bool ballVisible = false;
+int ballDirection = 0;
 int ballDir_drivable = 0;
 
-boolean goal_seen = false;
-int goalDir = 0;
+bool goalVisible = false;
+int goalDirection = 0;
 int goalDist = 0;
 
-boolean play = false;
-boolean gotBall = false;
+bool play = false;
+bool gotBall = false;
 
 int lastBallDirections[5] = {0, 0, 0, 0, 0};
 
@@ -22,11 +21,7 @@ int lastBallDirections[5] = {0, 0, 0, 0, 0};
 
 GameState gamestate;
 
-enum Direction
-{
-  Right,
-  Left
-};
+enum Direction { Right, Left };
 
 Direction goalSide;
 

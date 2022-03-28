@@ -4,7 +4,7 @@
 #include "persistence.h"
 #include <CAN.h>
 #include <Pixy2I2C.h>
-#include "bohlebots.h"
+#include "igit.h"
 #include "variables.h"
 #include "helper_functions.h"
 #include "core_functions.h"
@@ -19,9 +19,9 @@ void setup() {
   // EEPROM.begin(sizeof(GameState));
 
   Serial.println("initialization of bot");
-  igitBot.set_bot_type(4); // our bot has four wheels
-  igitBot.init();          // bb-header
-  // igitBot.setze_kompass();  // mittlerweile über Knopfdruck
+  igitBot.setBotType(4); // our bot has four wheels
+  igitBot.init();        // bb-header
+  // igitBot.setCompass();  // mittlerweile über Knopfdruck
 
   Serial.println("bot initialized and compass heading set");
 
@@ -43,14 +43,14 @@ void setup() {
   pinMode(LIGHTBARRIER, INPUT);
 
   // rainbow
-  int colors[7] = {ROT, GELB, GRUEN, CYAN, BLAU, MAGENTA};
+  int colors[] = {RED, YELLOW, GREEN, CYAN, BLUE, MAGENTA};
   for (int j = 0; j < 2; j++) {
     for (int i = 0; i < 7; i++) {
       igitBot.led(0, 1, colors[i]);
       igitBot.led(0, 2, colors[i]);
       igitBot.led(3, 1, colors[i]);
       igitBot.led(3, 2, colors[i]);
-      igitBot.warte(200);
+      igitBot.wait(200);
     }
   }
   igitBot.led(0, 1, AUS);
@@ -58,10 +58,10 @@ void setup() {
   igitBot.led(3, 1, AUS);
   igitBot.led(3, 2, AUS);
 
-  igitBot.led(0, 1, GRUEN);
+  igitBot.led(0, 1, GREEN);
   igitBot.led(3, 1,
               MAGENTA); // magenta cuz we dont want to irritate the other bots
-  // für kompass-taster-lampe das gleiche
+  // für kompass-button-lampe das gleiche
 }
 
 void loop() {
@@ -75,7 +75,5 @@ void loop() {
   debugOutput(25); // prints important values (measured/calculated) to serial
                    // monitor every nth loop run
 
-  igitBot.warte(10); // prevents that esp runs too fast for can, i2c, pixy, etc.
-  // tasterKram();
-  // motorTest();
+  igitBot.wait(10); // prevents that esp runs too fast for can, i2c, pixy, etc.
 }

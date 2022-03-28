@@ -1,64 +1,48 @@
 
-void debug_SerialOutput()
-{
-  Serial.println("//////////////////////////////////////////////");
-  Serial.println("BALL:");
-  Serial.println("       sees ball: " + String(ball_seen));
-  Serial.println("         ballDir: " + String(ballDir));
-  Serial.println("ballDir_drivable: " + String(ballDir_drivable));
-  Serial.println("         gotBall: " + String(gotBall));
-  Serial.println();
-  Serial.println("ORIENTATION:");
-  Serial.println("       sees goal: " + String(goal_seen));
-  Serial.println("         goalDir: " + String(goalDir));
-  Serial.println("            cmps: " + String(igitBot.kompass()));
-  Serial.println();
-  Serial.printf("       goal side: %s\n", goalSide == Right ? "right" : "left");
-  Serial.println("ALGORITHMIC:");
-  Serial.println(" left_or_right(): " + String(drive_left_or_right()));
-  Serial.println("//////////////////////////////////////////////");
-  Serial.println();
+void debug_SerialOutput() {
+  Serial.printf("-*-*-*-*-*-*-*-*-*-*-*-*-*-*-\n"
+                "ball visible:   %s\n"
+                "ball direction: %02d\n"
+                "got ball:       %s\n\n"
+                "goal visible:   %s\n"
+                "goal direction: %s\n"
+                "compass:        %s\n\n"
+                "goal side:      %s\n"
+                "-*-*-*-*-*-*-*-*-*-*-*-*-*-*-\n",
+                ballVisible, ballDirection, gotBall, goalVisible, goalDirection,
+                igitBot.compass(), goalSide);
 }
 
-int debug_cnt = 0;
+int debug_count = 0;
 
-void debugOutput(const int &n)
-{
+void debugOutput(const int &n) {
   // prints out debug info every n loop runs
   if (n <= 0)
     return;
-  ++debug_cnt;
-  if (debug_cnt >= n)
-  {
+  ++debug_count;
+  if (debug_count >= n) {
     debug_SerialOutput();
-    debug_cnt = 0;
+    debug_count = 0;
   }
 }
 
-void tasterKram()
-{
-  for (int i = 0; i < 8; ++i)
-  {
-    if (igitBot.taster(i, 1))
-    {
-      Serial.println("you pressed taster(" + String(i) + ",1)");
-      igitBot.led(i, 1, GRUEN);
-    }
-    else
+void tasterKram() {
+  for (int i = 0; i < 8; ++i) {
+    if (igitBot.button(i, 1)) {
+      Serial.printf("button ( %d, 1 ) pressed\n", i);
+      igitBot.led(i, 1, GREEN);
+    } else
       igitBot.led(i, 1, AUS);
 
-    if (igitBot.taster(i, 2))
-    {
-      Serial.println("you pressed taster(" + String(i) + ",2)");
-      igitBot.led(i, 2, ROT);
-    }
-    else
+    if (igitBot.button(i, 2)) {
+      Serial.printf("button ( %d, 2 ) pressed\n", i);
+      igitBot.led(i, 2, RED);
+    } else
       igitBot.led(i, 2, AUS);
   }
 }
 
-void motorTest()
-{
+void motorTest() {
   igitBot.motor(1, 50);
   igitBot.motor(2, 0);
   igitBot.motor(3, 0);
