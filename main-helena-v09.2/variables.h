@@ -14,3 +14,19 @@ int goalDir = 0;
 int goalDist = 0;
 
 boolean play = false;
+boolean gotBall = false;
+
+int lastBallDirections[5] = {0, 0, 0, 0, 0};
+
+#define LIGHTBARRIER 35
+
+GameState gamestate;
+
+enum Direction {
+  Right,
+  Left
+};
+
+Direction goalSide;
+
+elapsedMillis corner_timer = 0;

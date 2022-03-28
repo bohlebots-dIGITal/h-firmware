@@ -5,12 +5,14 @@ void debug_SerialOutput() {
   Serial.println("       sees ball: "+String(ball_seen));
   Serial.println("         ballDir: "+String(ballDir));
   Serial.println("ballDir_drivable: "+String(ballDir_drivable));
+  Serial.println("         gotBall: "+String(gotBall));
   Serial.println();
   Serial.println("ORIENTATION:");
- // Serial.println("       sees goal: "+String(goal_seen));
-  //Serial.println("         goalDir: "+String(goalDir));
+  Serial.println("       sees goal: "+String(goal_seen));
+  Serial.println("         goalDir: "+String(goalDir));
   Serial.println("            cmps: "+String(igitBot.kompass()));
   Serial.println();
+  Serial.printf("       goal side: %s\n", goalSide == Right ? "right" : "left");
   Serial.println("ALGORITHMIC:");
   Serial.println(" left_or_right(): "+String(drive_left_or_right()));
   Serial.println("//////////////////////////////////////////////");

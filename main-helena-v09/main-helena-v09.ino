@@ -1,4 +1,4 @@
-//TODO: EEPROM
+// Versuch: Implementierung EEPROM. Noch nicht getestet, kompiliert aber
 
 #include <CAN.h>
 #include <Pixy2I2C.h>
@@ -7,6 +7,7 @@
 #include "helper_functions.h"
 #include "core_functions.h"
 #include "debug_functions.h"
+#include "my_eeprom.h"
 
 
 void setup() {
@@ -21,13 +22,12 @@ void setup() {
   // für kompass-taster-lampe das gleiche
   Serial.println("bot initialized and compass heading set");
 
-  //////////////////////////////////////////////////////////////////////////////////////////////////////
-  /// ERST PIXY KABEL PRÜFEN -> nicht anstecken und testen sondern pins auf pixy einzeln nachmessen ///
-  //////////////////////////////////////////////////////////////////////////////////////////////////////
-  //das hier wieder einkommentieren
   pixy.init();
   Serial.println("pixy initialized");
-    
+  //Serial.begin(115200);
+  
+  //if (!EEPROM.begin(EEPROM_SIZE)) Serial.println("failed to initialise EEPROM"); while(1);
+  //eprom_init();
     
   Serial.println("init can");
   if (!CAN.begin(500E3)) {
@@ -35,15 +35,20 @@ void setup() {
     while(1);
   }  // started CAN bus at 500 kbps
   else Serial.println("can bus started successfully.");
+
+  pinMode(LIGHTBARRIER, INPUT);
 }
 
 void loop() {
+  
   getData();         //reads out data from hardware
+  //writeEEPROM();
   if(play) action(); //process data and act based on that
   else igitBot.fahre(0,0,0);
   //tasterKram();
   debugOutput(25);   //prints important values (measured/calculated) to serial monitor every nth loop run
   
-  igitBot.warte(10); //prevents that esp runs too fast for can, i2c, pixy, etc.*/
+  igitBot.warte(10); //prevents that esp runs too fast for can, i2c, pixy, etc.
   //motorTest();
+ 
 }

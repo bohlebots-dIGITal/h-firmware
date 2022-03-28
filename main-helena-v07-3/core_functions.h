@@ -43,7 +43,7 @@ void action() {
       //Serial.println("dir: "+String(dir)+" spd: "+String(spd)+" rot: "+String(turn));
       //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
       //nur video
-      //if(goal_seen && goalDist > 100 && abs(ballDir) > 2) dir = keep_direction_drivable((ballDir+3)/2);
+      if(goal_seen && goalDist > 100 && abs(ballDir) > 2) dir = keep_direction_drivable((ballDir+3)/2);
       //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
       igitBot.fahre(dir,(spd*MAX_SPEED)/100,turn);
     }

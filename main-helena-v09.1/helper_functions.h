@@ -98,4 +98,14 @@ void readTaster() {
     igitBot.led(0,1,GRUEN);
     igitBot.led(0,2,AUS);
   }
+  if(igitBot.taster(3,1)){
+    //Serial.println("taster 1");
+    igitBot.setze_kompass();
+  }
+  if(igitBot.taster(3,2)){Serial.println("taster 2");
+  }
+}
+
+void readLightbarrier() {
+  gotBall = (analogRead(LIGHTBARRIER) > 2000);
 }

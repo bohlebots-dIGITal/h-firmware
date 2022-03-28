@@ -21,12 +21,6 @@ void setup() {
   // für kompass-taster-lampe das gleiche
   Serial.println("bot initialized and compass heading set");
 
-  //////////////////////////////////////////////////////////////////////////////////////////////////////
-  /// ERST PIXY KABEL PRÜFEN -> nicht anstecken und testen sondern pins auf pixy einzeln nachmessen ///
-  //////////////////////////////////////////////////////////////////////////////////////////////////////
-  //pixy.init();
-  //Serial.println("pixy initialized");
-    
     
   Serial.println("init can");
   if (!CAN.begin(500E3)) {
@@ -42,7 +36,7 @@ void loop() {
   //if(play) action(); //process data and act based on that
   //else igitBot.fahre(0,0,0);
   //tasterKram();
-  debugOutput(25);   //prints important values (measured/calculated) to serial monitor every nth loop run
+  // debugOutput(1);   //prints important values (measured/calculated) to serial monitor every nth loop run
   
   igitBot.warte(10); //prevents that esp runs too fast for can, i2c, pixy, etc.*/
   //motorTest();

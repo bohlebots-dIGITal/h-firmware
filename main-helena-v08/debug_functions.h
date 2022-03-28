@@ -7,8 +7,8 @@ void debug_SerialOutput() {
   Serial.println("ballDir_drivable: "+String(ballDir_drivable));
   Serial.println();
   Serial.println("ORIENTATION:");
- // Serial.println("       sees goal: "+String(goal_seen));
-  //Serial.println("         goalDir: "+String(goalDir));
+  Serial.println("       sees goal: "+String(goal_seen));
+  Serial.println("         goalDir: "+String(goalDir));
   Serial.println("            cmps: "+String(igitBot.kompass()));
   Serial.println();
   Serial.println("ALGORITHMIC:");

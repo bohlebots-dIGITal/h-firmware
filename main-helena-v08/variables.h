@@ -14,3 +14,6 @@ int goalDir = 0;
 int goalDist = 0;
 
 boolean play = false;
+
+
+#define EEPROM_SIZE 64

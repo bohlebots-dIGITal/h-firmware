@@ -99,3 +99,7 @@ void readTaster() {
     igitBot.led(0,2,AUS);
   }
 }
+
+void readLightbarrier() {
+  gotBall = (analogRead(LIGHTBARRIER) > 2000);
+}

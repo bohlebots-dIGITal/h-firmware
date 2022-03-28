@@ -4,9 +4,9 @@
 
 void getData() {
   readCan();
-  //das hier wieder einkommentieren
   readPixy();
-  readTaster();
+  readTaster(); 
+  readLightbarrier();
 }
 
 void action() {
@@ -32,19 +32,33 @@ void action() {
       }
       if(ballDir < 0) dir = -dir;
       //left or right einbauen
+
+      //solange man der bot das tor sieht oder den ball nicht in der schale hat steht er nicht in der ecke
+      if (goal_seen  || !gotBall) corner_timer = 0; 
     
-      if(goal_seen) turn = goalDir;
+      if (goal_seen) turn = goalDir; // wenn Pixy tor sieht in torrichtung drehen
+      
       else {
-        if(ballDir == 0) turn = 0;
-        else turn = (-igitBot.kompass()/5)/*-(side(dir*2)*10)*/;
+        if (corner_timer > 1000) {  //bot steht  in der ecke
+          if (goalSide == Right) turn =  7;
+          else                   turn = -7;
+          spd = 0;
+          dir = 0;
+          //dir:0, spd:0, turn:+/-7 => bot dreht sich auf der stelle richtung tor
+        } 
+        ///////////////////////////////////////////////////////////////////////////
+        // der folgende block hatte kein else um sich herum und wurde daher immer 
+        // ausgefuehrt, dadurch wurden die fahre-werte des eckenprogramms sofort 
+        // wieder ueberschrieben
+        ///////////////////////////////////////////////////////////////////////////
+        else { //tor wird nicht gesehen aber nicht in der ecke 
+          spd = 40;
+          if(ballDir == 0) turn = 0;
+          else turn = (-igitBot.kompass()/5)/*-(side(dir*2)*10)*/;
+        }
       }
       
 
-      //Serial.println("dir: "+String(dir)+" spd: "+String(spd)+" rot: "+String(turn));
-      //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-      //nur video
-      //if(goal_seen && goalDist > 100 && abs(ballDir) > 2) dir = keep_direction_drivable((ballDir+3)/2);
-      //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
       igitBot.fahre(dir,(spd*MAX_SPEED)/100,turn);
     }
 }

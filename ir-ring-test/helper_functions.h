@@ -55,6 +55,8 @@ void readCan() {
     ballDir = (irData / 16) - 7;
     ballDir_drivable = (ballDir+side(ballDir))/2; //bohlebots header just has directions -3 to 4 as drivable
     int zone = irData % 16;
+
+    Serial.printf("ir data: %03d, zone: %02d, ballDir: %02d\n", irData, zone, ballDir);
     if (zone < 1)  ball_seen = false;
     else           ball_seen = true;
   }

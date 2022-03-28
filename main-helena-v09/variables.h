@@ -14,3 +14,7 @@ int goalDir = 0;
 int goalDist = 0;
 
 boolean play = false;
+boolean gotBall = false;
+
+#define EEPROM_SIZE 64
+#define LIGHTBARRIER 35
