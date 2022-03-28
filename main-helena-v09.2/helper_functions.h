@@ -80,15 +80,7 @@ void readCan()
     ballDir_drivable = (ballDir + side(ballDir)) / 2; // bohlebots header just has directions -3 to 4 as drivable
     int zone = irData % 16;
 
-    // shift all array values left by one cell
-    size_t lastValuesLength = sizeof(lastBallDirections) / sizeof(int)
-
-    for (int i = 1; i < lastValuesLength; i++) {
-      lastBallDirections[i-1] = lastBallDirections[i];
-    }
-
-    // set the most rightest value to the current ball direction
-    lastBallDirections[lastValuesLength] = ballDir;
+    
     
     if (zone < 1)
       ball_seen = false;
@@ -165,4 +157,12 @@ void readTaster()
 void readLightbarrier()
 {
   gotBall = (analogRead(LIGHTBARRIER) > 2000);
+}
+
+int average(int arr[]) {
+  int sum = 0;
+  for (int i = 0; i < sizeof(arr) / sizeof(int); i++) {
+    sum += arr[i];
+  }
+  return sum / (sizeof(arr) / sizeof(int));
 }

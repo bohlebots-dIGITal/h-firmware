@@ -15,7 +15,7 @@ void action() {
   int turn = 0;
   
   int whatWeWorkWith = ballDir;
-  if (!ball_seen) whatWeWorkWith = lastBallDirection;
+  if (!ball_seen) whatWeWorkWith = average(lastBallDirections);
 
   //aspired situation: drive with max speed to ball right in front of bot
   switch (abs(whatWeWorkWith)) {
@@ -38,18 +38,13 @@ void action() {
 
   if (goal_seen) turn = goalDir; // wenn Pixy tor sieht in torrichtung drehen
   
-  if (corner_timer > 1000) {  //bot steht  in der ecke
+  if (corner_timer > 1000) {  // bot steht  in der ecke
     if (goalSide == Right) turn =  7;
     else                   turn = -7;
     spd = 0;
     dir = 0;
     //dir:0, spd:0, turn:+/-7 => bot dreht sich auf der stelle richtung tor
   }
-  ///////////////////////////////////////////////////////////////////////////
-  // der folgende block hatte kein else um sich herum und wurde daher immer 
-  // ausgefuehrt, dadurch wurden die fahre-werte des eckenprogramms sofort 
-  // wieder ueberschrieben
-  ///////////////////////////////////////////////////////////////////////////
   else { //tor wird nicht gesehen aber nicht in der ecke 
     spd = 40;
     if(whatWeWorkWith == 0) turn = 0;
@@ -58,6 +53,14 @@ void action() {
 
   igitBot.fahre(dir,(spd*MAX_SPEED)/100,turn);
   if (ball_seen) {
-     lastBallDirection = ballDir;
+    // shift all array values left by one cell
+    size_t lastValuesLength = sizeof(lastBallDirections) / sizeof(int);
+
+    for (int i = 1; i < lastValuesLength; i++) {
+      lastBallDirections[i-1] = lastBallDirections[i];
+    }
+
+    // set the most rightest value to the current ball direction
+    lastBallDirections[lastValuesLength] = ballDir;
   }
 }
