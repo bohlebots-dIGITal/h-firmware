@@ -129,10 +129,10 @@ void readTaster() {
 
 void readLightbarrier() { gotBall = (analogRead(LIGHTBARRIER) > 2000); }
 
-int average(int arr[]) {
+int average(int arr[], size_t size) {
   int sum = 0;
-  for (int i = 0; i < sizeof(arr) / sizeof(int); i++) {
+  for (int i = 0; i < size; i++) {
     sum += arr[i];
   }
-  return sum / (sizeof(arr) / sizeof(int));
+  return sum / size;
 }

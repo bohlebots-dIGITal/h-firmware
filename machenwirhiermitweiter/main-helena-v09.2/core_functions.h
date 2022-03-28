@@ -14,8 +14,12 @@ void action() {
   int turn = 0;
 
   int whatWeWorkWith = ballDirection;
+  // if ball is invisible take the average of the last n directions the ball was
+  // visible in
   if (!ballVisible)
-    whatWeWorkWith = average(lastBallDirections);
+    whatWeWorkWith =
+        average(lastBallDirections,
+                sizeof(lastBallDirections) / sizeof(lastBallDirections[0]));
 
   // aspired situation: drive with max speed to ball right in front of bot
   switch (abs(whatWeWorkWith)) {
