@@ -25,4 +25,4 @@ enum Direction { Right, Left };
 
 Direction goalSide;
 
-elapsedMillis corner_timer = 0;
+elapsedMillis cornerTimer = 0;

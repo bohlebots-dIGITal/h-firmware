@@ -18,62 +18,35 @@ void action() {
   // visible in
   if (!ballVisible)
     whatWeWorkWith =
-        average(lastBallDirections,
-                sizeof(lastBallDirections) / sizeof(lastBallDirections[0]));
+        average(lastBallDirections, sizeof(lastBallDirections) / sizeof(lastBallDirections[0]));
 
   // aspired situation: drive with max speed to ball right in front of bot
+  // clang-format off
   switch (abs(whatWeWorkWith)) {
-  case 0:
-    direction = 0;
-    speed = 100;
-    break;
-  case 1:
-    direction = 2;
-    speed = 60;
-    break;
-  case 2:
-    direction = 2;
-    speed = 50;
-    break;
-  case 3:
-    direction = 3;
-    speed = 80;
-    break;
-  case 4:
-    direction = 4;
-    speed = 80;
-    break;
-  case 5:
-    direction = 4;
-    speed = 100;
-    break;
-  case 6:
-    direction = 4;
-    speed = 100;
-    break;
-  case 7:
-    direction = 4;
-    speed = 100;
-    break;
-  case 8:
-    direction = -2;
-    speed = 100;
-    break;
+  case 0: direction = 0; speed = 100; break;
+  case 1: direction = 2; speed = 60; break;
+  case 2: direction = 2; speed = 50; break;
+  case 3: direction = 3; speed = 80; break;
+  case 4: direction = 4; speed = 80; break;
+  case 5: direction = 4; speed = 100; break;
+  case 6: direction = 4; speed = 100; break;
+  case 7: direction = 4; speed = 100; break;
+  case 8: direction = -2; speed = 100; break;
   }
+  // clang-format on
 
-  if (whatWeWorkWith < 0)
-    direction = -direction;
+  if (whatWeWorkWith < 0) direction = -direction;
   // left or right einbauen
 
-  // solange man der bot das tor sieht oder den ball nicht in der schale hat
+  /* CORNER-SPECIFIC THINGS (eCkEnPrOgRaMm) */
+
+  // solange man der bot das tor sieht ~~(oder den ball nicht in der schale hat
   // steht er nicht in der ecke
-  if (goalVisible || !gotBall)
-    corner_timer = 0;
+  if (goalVisible /*|| !gotBall*/) cornerTimer = 0;
 
-  if (goalVisible)
-    turn = goalDirection; // wenn Pixy tor sieht in torrichtung drehen
+  if (goalVisible) turn = goalDirection;  // wenn Pixy tor sieht in torrichtung drehen
 
-  if (corner_timer > 1000) { // bot steht  in der ecke
+  if (cornerTimer > 1000) {  // bot steht in der ecke
     if (goalSide == Right)
       turn = 7;
     else
@@ -82,7 +55,7 @@ void action() {
     direction = 0;
     // direction:0, spd:0, turn:+/-7 => bot dreht sich auf der stelle richtung
     // tor
-  } else { // tor wird nicht gesehen aber nicht in der ecke
+  } else {  // tor wird nicht gesehen aber nicht in der ecke
     speed = 40;
     if (whatWeWorkWith == 0)
       turn = 0;
