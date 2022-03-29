@@ -1,5 +1,3 @@
-//überprüft von Jannis
-
 // clang-format off
 #include "persistence.h"
 #include <CAN.h>
