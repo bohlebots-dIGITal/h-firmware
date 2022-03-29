@@ -40,14 +40,14 @@ void setup() {
   pinMode(LIGHTBARRIER, INPUT);
 
   // rainbow
-  int colors[] = {RED, YELLOW, GREEN, CYAN, BLUE, MAGENTA};
+  int colors[] = {RED, YELLOW, GREEN, CYAN, BLUE};
   for (int j = 0; j < 2; j++) {
-    for (int i = 0; i < 7; i++) {
+    for (int i = 0; i < 5; i++) {
       igitBot.led(0, 1, colors[i]);
       igitBot.led(0, 2, colors[i]);
       igitBot.led(3, 1, colors[i]);
       igitBot.led(3, 2, colors[i]);
-      igitBot.wait(200);
+      igitBot.wait(100);
     }
   }
   igitBot.led(0, 1, AUS);
