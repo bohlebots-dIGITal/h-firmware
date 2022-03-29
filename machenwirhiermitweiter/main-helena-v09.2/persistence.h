@@ -1,4 +1,3 @@
-// aka EEPROM
 #pragma once
 #include <EEPROM.h>
 
