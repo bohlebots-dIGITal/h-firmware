@@ -4,7 +4,7 @@
 void getData() {
   readCan();
   readPixy();
-  readTaster();
+  readButton();
   readLightbarrier();
 }
 
@@ -100,6 +100,6 @@ void action() {
     }
 
     // set the most rightest value to the current ball direction
-    lastBallDirections[lastValuesLength] = ballDirection;
+    lastBallDirections[lastValuesLength - 1] = ballDirection;
   }
 }

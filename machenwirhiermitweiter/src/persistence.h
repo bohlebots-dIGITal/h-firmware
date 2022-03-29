@@ -6,16 +6,16 @@ struct GameState {
   int head;
 };
 
-void get_gamestate(GameState *gamestate) {
+void getGamestate(GameState *gamestate) {
   EEPROM.readBytes(0, gamestate, sizeof(GameState));
 }
 
-void set_gamestate(GameState *gamestate) {
+void setGamestate(GameState *gamestate) {
   EEPROM.writeBytes(0, gamestate, sizeof(GameState));
 }
 
-void output_gamestate(GameState *gamestate) {
-  get_gamestate(gamestate);
+void outputGamestate(GameState *gamestate) {
+  getGamestate(gamestate);
   Serial.printf("heading %d, playing: %s\n", gamestate->head,
                 gamestate->playing ? "playing" : "idle");
 }

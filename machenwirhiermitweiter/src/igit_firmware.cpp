@@ -26,7 +26,7 @@ void setup() {
   pixy.init();
   Serial.println("pixy initialized");
 
-  get_gamestate(&gamestate);
+  getGamestate(&gamestate);
   // head = gamestate.head;
 
   Serial.println("init can");
@@ -63,15 +63,14 @@ void setup() {
 }
 
 void loop() {
-
   getData(); // reads out data from hardware
   if (gamestate.playing)
     action(); // process data and act based on that
   else
     igitBot.fahre(0, 0, 0);
 
-  debugOutput(25); // prints important values (measured/calculated) to serial
-                   // monitor every nth loop run
+  debugOutput(3); // prints important values (measured/calculated) to serial
+                  // monitor every nth loop run
 
   igitBot.wait(10); // prevents that esp runs too fast for can, i2c, pixy, etc.
 }

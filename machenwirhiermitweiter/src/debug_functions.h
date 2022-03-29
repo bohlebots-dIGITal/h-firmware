@@ -1,28 +1,36 @@
 
 void debug_SerialOutput() {
   Serial.printf("-*-*-*-*-*-*-*-*-*-*-*-*-*-*-\n"
-                "ball visible:   %s\n"
-                "ball direction: %02d\n"
-                "got ball:       %s\n\n"
-                "goal visible:   %s\n"
-                "goal direction: %s\n"
-                "compass:        %s\n\n"
-                "goal side:      %s\n"
+                "ball visible:               %s\n"
+                "ball direction:             %02d\n"
+                "last ball directions (avg): %d\n"
+                "last ball directions:       [ %02d %02d %02d %02d %02d ]\n"
+                "got ball:                   %s\n\n"
+
+                "goal visible:               %s\n"
+                "goal direction:             %d\n"
+                "compass:                    %d\n\n"
+
+                "goal side:                  %d\n"
                 "-*-*-*-*-*-*-*-*-*-*-*-*-*-*-\n",
-                ballVisible, ballDirection, gotBall, goalVisible, goalDirection,
-                igitBot.compass(), goalSide);
+                ballVisible ? "true" : "false", ballDirection,
+                average(lastBallDirections, 5), lastBallDirections[0],
+                lastBallDirections[1], lastBallDirections[2],
+                lastBallDirections[3], lastBallDirections[4],
+                gotBall ? "true" : "false", goalVisible ? "true" : "false",
+                goalDirection, igitBot.compass(), goalSide);
 }
 
-int debug_count = 0;
+int debugCount = 0;
 
 void debugOutput(const int &n) {
   // prints out debug info every n loop runs
   if (n <= 0)
     return;
-  ++debug_count;
-  if (debug_count >= n) {
+  ++debugCount;
+  if (debugCount >= n) {
     debug_SerialOutput();
-    debug_count = 0;
+    debugCount = 0;
   }
 }
 

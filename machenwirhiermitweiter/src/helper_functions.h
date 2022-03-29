@@ -22,33 +22,6 @@ int sign(const int &d) {
   return d / abs(d);
 }
 
-int drive_left_or_right() {
-  // returns 1 for driving right
-  // returns -1 for driving left
-
-  if (!goalVisible)
-    return 1; // no goal => we have to choose one way and right is the german
-              // way
-
-  int cmps = igitBot.compass();
-  int c_side = 1;
-  if (cmps != 0)
-    c_side = cmps / abs(cmps); // every negative becomes -1 and every positive 1
-
-  int g_side = 1;
-  if (goalDirection != 0)
-    g_side =
-        goalDirection /
-        abs(goalDirection); // every negative becomes -1 and every positive 1
-
-  // at the sides with a centered goal => compass decides the way to drive
-  // otherwise use the pixy to determine which way around
-  if (abs(goalDirection) <= 30 && abs(cmps) >= 15)
-    return c_side;
-  else
-    return g_side;
-}
-
 void readCan() {
   CAN.beginPacket(0x03, 1, true);
   CAN.endPacket();
@@ -104,23 +77,23 @@ void readPixy() {
   }
 }
 
-void readTaster() {
+void readButton() {
   if (igitBot.button(0, 1)) {
     gamestate.playing = true;
-    set_gamestate(&gamestate);
+    setGamestate(&gamestate);
     igitBot.led(0, 1, AUS);
     igitBot.led(0, 2, RED);
   }
   if (igitBot.button(0, 2)) {
     gamestate.playing = false;
-    set_gamestate(&gamestate);
+    setGamestate(&gamestate);
     igitBot.led(0, 1, GREEN);
     igitBot.led(0, 2, AUS);
   }
   if (igitBot.button(3, 1)) {
     igitBot.setCompass();
     gamestate.head = head;
-    set_gamestate(&gamestate);
+    setGamestate(&gamestate);
   }
   if (igitBot.button(3, 2)) {
     Serial.println("button 2");

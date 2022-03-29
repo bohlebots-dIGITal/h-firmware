@@ -1,22 +1,3 @@
-
-// 02. Dezember 2020
-// Bohlebots
-// header für BohleBots Hauptplatinen
-
-// Einfach in das Verzeichnis mit der .ino Datei legen und benutzen
-// die vier Motor-Outputs und die vier 12Bit Analog-Inputs sind vordefiniert
-// motor(nr,speed) und input(nr)
-// zusätzlich gibt es den Wrapper digit, der das Analoge Signal der Inputs als
-// digital-Signal True oder False zurück gibt, True bei closed, False bei open
-
-// Auf die restlichen 5 Ports kann mit Hilfe der defines io1 bis io5
-// normal mit pinMode, analogRead, digitalRead, digitalWrite oder Servo
-// zugegriffen werden Standardmäßig ist io1 für ein Servo voreingestellt.
-
-// Die Serielle Schnittstelle sowie der I2C Bus werden automatisch gestartet
-
-// Interessant sind sicherlich noch Canbus, EEPROM, WIFI und BLE
-
 /*
  * Festlegung der Farben der LEDs auf der tastled-Platine
  */
@@ -213,8 +194,8 @@ public:
       t = 4;
   }
 
-  void servo(int pos) // sinnvollerweise von -100 bis 100
-  {
+  // sinnvollerweise von -100 bis 100
+  void servo(int pos) {
     if (pos > 100)
       pos = 100;
     if (pos < -100)
