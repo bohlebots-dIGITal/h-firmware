@@ -16,9 +16,9 @@ void action() {
   int whatWeWorkWith = ballDirection;
   // if ball is invisible take the average of the last n directions the ball was
   // visible in
-  if (!ballVisible)
-    whatWeWorkWith =
-        average(lastBallDirections, sizeof(lastBallDirections) / sizeof(lastBallDirections[0]));
+  if (!ballVisible) igitBot.fahre(0,0,0);
+    //whatWeWorkWith =
+        //average(lastBallDirections, sizeof(lastBallDirections) / sizeof(lastBallDirections[0]));
 
   // aspired situation: drive with max speed to ball right in front of bot
   // clang-format off
@@ -42,11 +42,12 @@ void action() {
 
   // solange man der bot das tor sieht ~~(oder den ball nicht in der schale hat
   // steht er nicht in der ecke
-  if (goalVisible /*|| !gotBall*/) cornerTimer = 0;
-
-  if (goalVisible) turn = goalDirection;  // wenn Pixy tor sieht in torrichtung drehen
-
-  if (cornerTimer > 1000) {  // bot steht in der ecke
+  if (goalVisible) {
+    cornerTimer = 0;
+    turn = goalDirection;  // wenn Pixy tor sieht in torrichtung drehen
+  } 
+  else {
+    if (cornerTimer > 1000) {  // bot steht in der ecke
     if (goalSide == Right)
       turn = 7;
     else
@@ -55,13 +56,15 @@ void action() {
     direction = 0;
     // direction:0, spd:0, turn:+/-7 => bot dreht sich auf der stelle richtung
     // tor
-  } else {  // tor wird nicht gesehen aber nicht in der ecke
+  } else if (!goalVisible) {  // tor wird nicht gesehen aber nicht in der ecke
     speed = 40;
     if (whatWeWorkWith == 0)
       turn = 0;
     else
       turn = (-igitBot.compass() / 5) /*-(side(direction*2)*10)*/;
   }
+  }
+  
 
   igitBot.fahre(direction, (speed * MAX_SPEED) / 100, turn);
   if (ballVisible) {
