@@ -38,6 +38,7 @@ void setup() {
     Serial.println("can bus started successfully.");
 
   pinMode(LIGHTBARRIER, INPUT);
+  pinMode(KICKER_PIN, OUTPUT);
 
   // rainbow
   int colors[] = {RED, YELLOW, GREEN, CYAN, BLUE};
@@ -50,17 +51,14 @@ void setup() {
       igitBot.wait(100);
     }
   }
-  igitBot.led(0, 1, AUS);
-  igitBot.led(0, 2, AUS);
-  igitBot.led(3, 1, AUS);
-  igitBot.led(3, 2, AUS);
+  igitBot.led(0, 1, OFF);
+  igitBot.led(0, 2, OFF);
+  igitBot.led(3, 1, OFF);
+  igitBot.led(3, 2, OFF);
 
-  igitBot.led(0, 1, GREEN);
-  igitBot.led(3, 1,
-              MAGENTA);  // magenta cuz we dont want to irritate the other bots
-  // für kompass-button-lampe das gleiche
+  igitBot.resetLEDs();
 
-  igitBot.kick(20);
+  igitBot.wait(1);
 }
 
 void loop() {
@@ -70,8 +68,8 @@ void loop() {
   else
     igitBot.fahre(0, 0, 0);
 
-  debugOutput(3);  // prints important values (measured/calculated) to serial
-                   // monitor every nth loop run
+  // debugOutput(3);  // prints important values (measured/calculated) to serial
+  // monitor every nth loop run
 
   igitBot.wait(10);  // prevents that esp runs too fast for can, i2c, pixy, etc.
 }

@@ -5,20 +5,16 @@
 // returns  1 if direction is to the right of bot
 // returns -1 if direction is to the left  of bot
 int side(const int &d) {
-  if (d % 4 == 0)
-    return 0;
-  if (d > 0)
-    return 1;
-  if (d < 0)
-    return -1;
+  if (d % 4 == 0) return 0;
+  if (d > 0) return 1;
+  if (d < 0) return -1;
 
-  return 0; // um compiler warnings zu vermeiden (wird nie erreicht)
+  return 0;  // um compiler warnings zu vermeiden (wird nie erreicht)
 }
 
 int sign(const int &d) {
   // returns the VORZEICHÖÖÖN
-  if (d == 0)
-    return 1;
+  if (d == 0) return 1;
   return d / abs(d);
 }
 
@@ -26,15 +22,13 @@ void readCan() {
   CAN.beginPacket(0x03, 1, true);
   CAN.endPacket();
 
-  while (!CAN.parsePacket())
-    delayMicroseconds(1);
+  while (!CAN.parsePacket()) delayMicroseconds(1);
 
   while (CAN.available()) {
     int irData = CAN.read();
     ballDirection = (irData / 16) - 7;
-    ballDir_drivable =
-        (ballDirection + side(ballDirection)) /
-        2; // bohlebots header just has directions -3 to 4 as drivable
+    ballDir_drivable = (ballDirection + side(ballDirection)) /
+                       2;  // bohlebots header just has directions -3 to 4 as drivable
     int zone = irData % 16;
 
     if (zone < 1)
@@ -56,7 +50,7 @@ void readPixy() {
   if (pixy.ccc.blocks[0].m_signature == 1) {
     // signature 1 = goal we score on
     goalVisible = true;
-    goalDirection = (pixy.ccc.blocks[0].m_x - 158) / 4; // ERFAHRUNG
+    goalDirection = (pixy.ccc.blocks[0].m_x - 158) / 4;  // ERFAHRUNG
     goalDist = pixy.ccc.blocks[0].m_y;
 
     if (goalDirection > 0) {
@@ -81,14 +75,14 @@ void readButton() {
   if (igitBot.button(0, 1)) {
     gamestate.playing = true;
     setGamestate(&gamestate);
-    igitBot.led(0, 1, AUS);
+    igitBot.led(0, 1, OFF);
     igitBot.led(0, 2, RED);
   }
   if (igitBot.button(0, 2)) {
     gamestate.playing = false;
     setGamestate(&gamestate);
     igitBot.led(0, 1, GREEN);
-    igitBot.led(0, 2, AUS);
+    igitBot.led(0, 2, OFF);
   }
   if (igitBot.button(3, 1)) {
     igitBot.setCompass();
@@ -96,7 +90,8 @@ void readButton() {
     setGamestate(&gamestate);
   }
   if (igitBot.button(3, 2)) {
-    Serial.println("button 2");
+    Serial.printf("kicked.\n");
+    igitBot.kick(20);
   }
 }
 

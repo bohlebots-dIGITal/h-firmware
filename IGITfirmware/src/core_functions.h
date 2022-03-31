@@ -45,8 +45,7 @@ void action() {
   if (goalVisible) {
     cornerTimer = 0;
     turn = goalDirection;  // wenn Pixy tor sieht in torrichtung drehen
-  } 
-  else {
+  } else {
     if (cornerTimer > 1000) {  // steht in ecke
       if (goalSide == Right)
         turn = 7;
@@ -55,14 +54,14 @@ void action() {
       speed = 0;
       direction = 0;
       // direction:0, spd:0, turn:+/-7 => bot dreht sich auf der stelle richtung tor
-    } 
-    else {  // nicht in ecke aber tor wird nicht gesehen
-      //speed = 40;
-      if (whatWeWorkWith == 0) turn = 0;
-      else turn = (-igitBot.compass() / 5) /*-(side(direction*2)*10)*/;
+    } else {  // nicht in ecke aber tor wird nicht gesehen
+      // speed = 40;
+      if (whatWeWorkWith == 0)
+        turn = 0;
+      else
+        turn = (-igitBot.compass() / 5) /*-(side(direction*2)*10)*/;
+    }
   }
-  }
-  
 
   igitBot.fahre(direction, (speed * MAX_SPEED) / 100, turn);
   if (ballVisible) {

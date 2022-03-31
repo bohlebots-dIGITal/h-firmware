@@ -1,7 +1,7 @@
 /*
  * Festlegung der Farben der LEDs auf der tastled-Platine
  */
-#define AUS 0
+#define OFF 0
 #define GREEN 1
 #define RED 2
 #define YELLOW 3
@@ -30,7 +30,6 @@
 // statt dessen bohlebots.wait(ms)
 
 #include <Wire.h>
-
 #include <elapsedMillis.h>
 
 #define SDA 21
@@ -63,7 +62,7 @@
 
 #define KICKER_PIN 33
 
-#define KOMPASS_ADRESSE 0x60 // cmps11, cmps12, cmps14
+#define KOMPASS_ADRESSE 0x60  // cmps11, cmps12, cmps14
 #define ANGLE_8 1
 int kompass_wert;
 int head;
@@ -83,9 +82,9 @@ elapsedMillis lastKick;
 elapsedMillis wartezeit;
 
 class IGITBot {
-public:
+ public:
   IGITBot() {
-    Serial.begin(115200); // entweder hier oder im setup
+    Serial.begin(115200);  // entweder hier oder im setup
     Wire.begin(SDA, SCL);
 
     pinMode(DRIVE_DIS, OUTPUT);
@@ -123,8 +122,7 @@ public:
     for (int lauf = 0; lauf < 8; lauf++) {
       Wire.beginTransmission(tastLedID[lauf]);
       byte error = Wire.endTransmission();
-      if (error == 0)
-        portena[lauf] = true;
+      if (error == 0) portena[lauf] = true;
       Serial.print("LED_Tast : " + String(lauf) + " : ");
       if (error == 0)
         Serial.println("true");
@@ -134,8 +132,7 @@ public:
     delay(100);
     Wire.beginTransmission(KOMPASS_ADRESSE);
     byte error = Wire.endTransmission();
-    if (error == 0)
-      kompass_ena = true;
+    if (error == 0) kompass_ena = true;
     if (error == 0)
       Serial.println("Kompass true");
     else
@@ -154,10 +151,8 @@ public:
 
   void motor(int number, int speed) {
     // Speed wird bei 100 und -100 gekappt
-    if (speed > 100)
-      speed = 100;
-    if (speed < -100)
-      speed = -100;
+    if (speed > 100) speed = 100;
+    if (speed < -100) speed = -100;
     int pwm = speedToPWM(speed);
     int dir;
     if (speed < 0)
@@ -165,55 +160,39 @@ public:
     else
       dir = HIGH;
 
-    if (number == 1)
-      digitalWrite(DRIVE1_DIR, dir);
-    if (number == 2)
-      digitalWrite(DRIVE2_DIR, dir);
-    if (number == 3)
-      digitalWrite(DRIVE3_DIR, dir);
-    if (number == 4)
-      digitalWrite(DRIVE4_DIR, dir);
+    if (number == 1) digitalWrite(DRIVE1_DIR, dir);
+    if (number == 2) digitalWrite(DRIVE2_DIR, dir);
+    if (number == 3) digitalWrite(DRIVE3_DIR, dir);
+    if (number == 4) digitalWrite(DRIVE4_DIR, dir);
 
-    if ((number > 0) && (number < 5))
-      ledcWrite(number, pwm);
+    if ((number > 0) && (number < 5)) ledcWrite(number, pwm);
   }
 
   void fahre(int richtung, int geschw, int dreh) {
-    if (bot_type == 2)
-      fahre2(richtung, geschw, dreh);
-    if (bot_type == 3)
-      fahre3(richtung, geschw, dreh);
-    if (bot_type == 4)
-      fahre4(richtung, geschw, dreh);
+    if (bot_type == 2) fahre2(richtung, geschw, dreh);
+    if (bot_type == 3) fahre3(richtung, geschw, dreh);
+    if (bot_type == 4) fahre4(richtung, geschw, dreh);
   }
 
   void setBotType(int t) {
-    if (t < 2)
-      t = 2;
-    if (t > 4)
-      t = 4;
+    if (t < 2) t = 2;
+    if (t > 4) t = 4;
   }
 
   // sinnvollerweise von -100 bis 100
   void servo(int pos) {
-    if (pos > 100)
-      pos = 100;
-    if (pos < -100)
-      pos = -100;
+    if (pos > 100) pos = 100;
+    if (pos < -100) pos = -100;
     ledcWrite(6, 5000 + pos * 30);
   }
 
   void ena(bool isena) { digitalWrite(DRIVE_DIS, !isena); }
 
   int input(int number) {
-    if (number == 1)
-      return (analogRead(INPUT1));
-    if (number == 2)
-      return (analogRead(INPUT2));
-    if (number == 3)
-      return (analogRead(INPUT3));
-    if (number == 4)
-      return (analogRead(INPUT4));
+    if (number == 1) return (analogRead(INPUT1));
+    if (number == 2) return (analogRead(INPUT2));
+    if (number == 3) return (analogRead(INPUT3));
+    if (number == 4) return (analogRead(INPUT4));
   }
 
   int compass() { return kompass_wert; }
@@ -225,34 +204,25 @@ public:
       head = kompass_org();
     }
   }
-  bool
-  button(int device,
-         int nr) // device: Taster-Board (auf Platine); nr: (1:links, 2:rechts)
+  bool button(int device,
+              int nr)  // device: Taster-Board (auf Platine); nr: (1:links, 2:rechts)
   {
-    if (device < 0)
-      return false;
-    if (device > 7)
-      return false; // bis zu 7 Taster möglich
+    if (device < 0) return false;
+    if (device > 7) return false;  // bis zu 7 Taster möglich
     // portena[device] = true;
-    if (nr == 1)
-      return taster1Array[device];
-    if (nr == 2)
-      return taster2Array[device];
+    if (nr == 1) return taster1Array[device];
+    if (nr == 2) return taster2Array[device];
     return false;
   }
 
   void led(int device, int nr,
-           int farbe) // setzt device led nr (1:links, 2:rechts) auf farbe
+           int farbe)  // setzt device led nr (1:links, 2:rechts) auf farbe
 
   {
-    if (farbe < 0)
-      return;
-    if (farbe > 7)
-      return;
-    if (device < 0)
-      return;
-    if (device > 7)
-      return;
+    if (farbe < 0) return;
+    if (farbe > 7) return;
+    if (device < 0) return;
+    if (device > 7) return;
 
     // portena[device] = true;
 
@@ -262,40 +232,56 @@ public:
     }
     if (nr == 2) {
       farbe = farbe * 16;
-      if (farbe > 63)
-        farbe = farbe + 64;
+      if (farbe > 63) farbe = farbe + 64;
       led2Array[device] = farbe;
     }
   }
 
+  // resets the LEDs after animations overwrite them
+  void resetLEDs() {
+    this->led(0, 1, GREEN);
+    this->led(3, 1, MAGENTA);  // magenta cuz we dont want to irritate the other bots
+    // für kompass-button-lampe das gleiche
+  }
+
   // actuates the kicking unit
-  // kickTime -- how long the pin should be pulled hight - how long the solenoid should be actuated 
+  // kickTime -- how long the pin should be pulled hight - how long the solenoid should be actuated
   void kick(int kickTime) {
-    if (lastKick < 1000)
-      return;
-    if (kickTime > 40)
-      kickTime = 40;
+    if (lastKick < 1000) return;
+    if (kickTime > 40) kickTime = 40;
     digitalWrite(KICKER_PIN, HIGH);
+
     delay(kickTime);
     digitalWrite(KICKER_PIN, LOW);
     lastKick = 0;
+
+    // animation
+    for (int i = 0; i < 2; i++) {
+      this->led(0, 1, RED);
+      this->led(0, 2, RED);
+      this->led(3, 1, RED);
+      this->led(3, 2, RED);
+      this->wait(50);
+
+      this->led(0, 1, OFF);
+      this->led(0, 2, OFF);
+      this->led(3, 1, OFF);
+      this->led(3, 2, OFF);
+      this->wait(50);
+    }
+    this->resetLEDs();
   }
 
   bool digit(int number) {
-    if (number == 1)
-      return (analogRead(INPUT1) < 2048);
-    if (number == 2)
-      return (analogRead(INPUT2) < 2048);
-    if (number == 3)
-      return (analogRead(INPUT3) < 2048);
-    if (number == 4)
-      return (analogRead(INPUT4) < 2048);
+    if (number == 1) return (analogRead(INPUT1) < 2048);
+    if (number == 2) return (analogRead(INPUT2) < 2048);
+    if (number == 3) return (analogRead(INPUT3) < 2048);
+    if (number == 4) return (analogRead(INPUT4) < 2048);
   }
 
-private:
+ private:
   int speedToPWM(int speed) {
-    if (speed < 0)
-      speed *= -1;
+    if (speed < 0) speed *= -1;
     return ((speed * 255) / 100);
   }
 
@@ -308,19 +294,17 @@ private:
     Wire.requestFrom(KOMPASS_ADRESSE, 3);
     while (Wire.available() < 3)
       ;
-    angle8 = Wire.read(); // Read back the 5 bytes
+    angle8 = Wire.read();  // Read back the 5 bytes
     high_byte = Wire.read();
     low_byte = Wire.read();
-    angle16 = high_byte; // Calculate 16 bit angle
+    angle16 = high_byte;  // Calculate 16 bit angle
     angle16 <<= 8;
     angle16 += low_byte;
     return angle16 / 10;
   }
 
   // ????
-  int readCompass() {
-    return ((((kompass_org() - head) + 180 + 360) % 360) - 180);
-  }
+  int readCompass() { return ((((kompass_org() - head) + 180 + 360) % 360) - 180); }
 
   void setHeading() { head = kompass_org(); }
 
@@ -348,7 +332,7 @@ private:
             taster1Array[lauf] = false;
         }
       }
-    } // ENDE TastLED
+    }  // ENDE TastLED
     if (kompass_ena == true) {
       kompass_wert = readCompass();
     }
@@ -371,42 +355,42 @@ private:
       geschw = geschw * 100 / maxs;
       dreh = dreh * 100 / maxs;
     }
-    if (richtung == 0) // geradeaus
+    if (richtung == 0)  // geradeaus
     {
       motor(1, -geschw + dreh);
       motor(2, +dreh);
       motor(3, geschw + dreh);
     }
 
-    if (richtung == 1) // 60 Grad rechts
+    if (richtung == 1)  // 60 Grad rechts
     {
       motor(1, +dreh);
       motor(2, geschw + dreh);
       motor(3, -geschw + dreh);
     }
 
-    if (richtung == -1) // -60 Grad links
+    if (richtung == -1)  // -60 Grad links
     {
       motor(1, -geschw + dreh);
       motor(2, geschw + dreh);
       motor(3, +dreh);
     }
 
-    if (richtung == 3) // zurück
+    if (richtung == 3)  // zurück
     {
       motor(1, geschw + dreh);
       motor(2, +dreh);
       motor(3, -geschw + dreh);
     }
 
-    if (richtung == -2) // -120 Grad links
+    if (richtung == -2)  // -120 Grad links
     {
       motor(1, +dreh);
       motor(2, -geschw + dreh);
       motor(3, geschw + dreh);
     }
 
-    if (richtung == 2) // 120 Grad rechts
+    if (richtung == 2)  // 120 Grad rechts
     {
       motor(1, geschw + dreh);
       motor(2, -geschw + dreh);
@@ -422,7 +406,7 @@ private:
       geschw = geschw * 100 / maxs;
       dreh = dreh * 100 / maxs;
     }
-    if (richtung == 0) // geradeaus
+    if (richtung == 0)  // geradeaus
     {
       motor(1, -geschw + dreh);
       motor(2, -geschw + dreh);
@@ -430,14 +414,14 @@ private:
       motor(4, geschw + dreh);
     }
 
-    if (richtung == 1) // 45 Grad rechts
+    if (richtung == 1)  // 45 Grad rechts
     {
       motor(1, +dreh);
       motor(2, -geschw + dreh);
       motor(3, +dreh);
       motor(4, geschw + dreh);
     }
-    if (richtung == 2) // rechts
+    if (richtung == 2)  // rechts
     {
       motor(1, geschw + dreh);
       motor(2, -geschw + dreh);
@@ -445,7 +429,7 @@ private:
       motor(4, geschw + dreh);
     }
 
-    if (richtung == 3) // 135 Grad rechts
+    if (richtung == 3)  // 135 Grad rechts
     {
       motor(1, geschw + dreh);
       motor(2, +dreh);
@@ -453,7 +437,7 @@ private:
       motor(4, +dreh);
     }
 
-    if (richtung == 4) // zurück
+    if (richtung == 4)  // zurück
     {
       motor(1, geschw + dreh);
       motor(2, geschw + dreh);
@@ -461,14 +445,14 @@ private:
       motor(4, -geschw + dreh);
     }
 
-    if (richtung == -3) // 135 Grad links
+    if (richtung == -3)  // 135 Grad links
     {
       motor(1, +dreh);
       motor(2, geschw + dreh);
       motor(3, +dreh);
       motor(4, -geschw + dreh);
     }
-    if (richtung == -2) // links
+    if (richtung == -2)  // links
     {
       motor(1, -geschw + dreh);
       motor(2, geschw + dreh);
@@ -476,7 +460,7 @@ private:
       motor(4, -geschw + dreh);
     }
 
-    if (richtung == -1) // 45 Grad links
+    if (richtung == -1)  // 45 Grad links
     {
       motor(1, -geschw + dreh);
       motor(2, +dreh);
