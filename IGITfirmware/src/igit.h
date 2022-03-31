@@ -268,6 +268,8 @@ public:
     }
   }
 
+  // actuates the kicking unit
+  // kickTime -- how long the pin should be pulled hight - how long the solenoid should be actuated 
   void kick(int kickTime) {
     if (lastKick < 1000)
       return;
