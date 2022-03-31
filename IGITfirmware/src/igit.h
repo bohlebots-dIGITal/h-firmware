@@ -61,7 +61,7 @@
 #define io4 18
 #define io5 19
 
-#define kicker 33
+#define KICKER_PIN 33
 
 #define KOMPASS_ADRESSE 0x60 // cmps11, cmps12, cmps14
 #define ANGLE_8 1
@@ -275,9 +275,9 @@ public:
       return;
     if (kickTime > 40)
       kickTime = 40;
-    digitalWrite(kicker, HIGH);
+    digitalWrite(KICKER_PIN, HIGH);
     delay(kickTime);
-    digitalWrite(kicker, LOW);
+    digitalWrite(KICKER_PIN, LOW);
     lastKick = 0;
   }
 
