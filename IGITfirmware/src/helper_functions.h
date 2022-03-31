@@ -91,7 +91,7 @@ void readButton() {
   }
   if (igitBot.button(3, 2)) {
     Serial.printf("kicked.\n");
-    igitBot.kick(20);
+    igitBot.kick(KICK_TIME);
   }
 }
 

@@ -12,6 +12,7 @@ void action() {
   int direction = 0;
   int speed = 0;
   int turn = 0;
+  bool shouldKick = false;
 
   int whatWeWorkWith = ballDirection;
   // if ball is invisible take the average of the last n directions the ball was
@@ -23,7 +24,7 @@ void action() {
   // aspired situation: drive with max speed to ball right in front of bot
   // clang-format off
   switch (abs(whatWeWorkWith)) {
-    case 0: direction = 0; speed = 100; break;
+    case 0: direction = 0; speed = 100; shouldKick = true; break;
     case 1: direction = 2; speed = 60; break;
     case 2: direction = 2; speed = 50; break;
     case 3: direction = 3; speed = 80; break;
@@ -64,6 +65,10 @@ void action() {
   }
 
   igitBot.fahre(direction, (speed * MAX_SPEED) / 100, turn);
+
+  if (shouldKick) {
+    igitBot.kick(KICK_TIME);
+  }
   if (ballVisible) {
     // shift all array values left by one cell
     size_t lastValuesLength = sizeof(lastBallDirections) / sizeof(int);

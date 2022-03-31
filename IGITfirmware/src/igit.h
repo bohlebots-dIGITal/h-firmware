@@ -269,6 +269,8 @@ class IGITBot {
       this->led(3, 2, OFF);
       this->wait(50);
     }
+
+    this->wait(150);
     this->resetLEDs();
   }
 
