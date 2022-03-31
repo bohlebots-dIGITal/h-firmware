@@ -15,23 +15,23 @@ void action() {
 
   int whatWeWorkWith = ballDirection;
   // if ball is invisible take the average of the last n directions the ball was
-  // visible in
-  if (!ballVisible) igitBot.fahre(0,0,0);
-    //whatWeWorkWith =
-        //average(lastBallDirections, sizeof(lastBallDirections) / sizeof(lastBallDirections[0]));
+  if (!ballVisible) {
+    whatWeWorkWith =
+        average(lastBallDirections, sizeof(lastBallDirections) / sizeof(lastBallDirections[0]));
+  }
 
   // aspired situation: drive with max speed to ball right in front of bot
   // clang-format off
   switch (abs(whatWeWorkWith)) {
-  case 0: direction = 0; speed = 100; break;
-  case 1: direction = 2; speed = 60; break;
-  case 2: direction = 2; speed = 50; break;
-  case 3: direction = 3; speed = 80; break;
-  case 4: direction = 4; speed = 80; break;
-  case 5: direction = 4; speed = 100; break;
-  case 6: direction = 4; speed = 100; break;
-  case 7: direction = 4; speed = 100; break;
-  case 8: direction = -2; speed = 100; break;
+    case 0: direction = 0; speed = 100; break;
+    case 1: direction = 2; speed = 60; break;
+    case 2: direction = 2; speed = 50; break;
+    case 3: direction = 3; speed = 80; break;
+    case 4: direction = 4; speed = 80; break;
+    case 5: direction = 4; speed = 100; break;
+    case 6: direction = 4; speed = 100; break;
+    case 7: direction = 4; speed = 100; break;
+    case 8: direction = -2; speed = 100; break;
   }
   // clang-format on
 
