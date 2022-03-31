@@ -79,7 +79,7 @@ bool taster2Array[] = {false, false, false, false, false, false, false, false};
 int led1Array[] = {0, 0, 0, 0, 0, 0, 0, 0};
 int led2Array[] = {0, 0, 0, 0, 0, 0, 0, 0};
 
-elapsedMillis totzeit;
+elapsedMillis lastKick;
 elapsedMillis wartezeit;
 
 class IGITBot {
@@ -268,15 +268,15 @@ public:
     }
   }
 
-  void kick(int zeit) {
-    if (totzeit < 1000)
+  void kick(int kickTime) {
+    if (lastKick < 1000)
       return;
-    if (zeit > 40)
-      zeit = 40;
+    if (kickTime > 40)
+      kickTime = 40;
     digitalWrite(kicker, HIGH);
-    delay(zeit);
+    delay(kickTime);
     digitalWrite(kicker, LOW);
-    totzeit = 0;
+    lastKick = 0;
   }
 
   bool digit(int number) {
