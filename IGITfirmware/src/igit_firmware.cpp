@@ -59,6 +59,8 @@ void setup() {
   igitBot.led(3, 1,
               MAGENTA);  // magenta cuz we dont want to irritate the other bots
   // für kompass-button-lampe das gleiche
+
+  igitBot.kick(20);
 }
 
 void loop() {
