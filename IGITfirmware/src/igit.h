@@ -61,7 +61,7 @@
 #define io4 18
 #define io5 19
 
-#define kicker 23
+#define kicker 33
 
 #define KOMPASS_ADRESSE 0x60 // cmps11, cmps12, cmps14
 #define ANGLE_8 1
