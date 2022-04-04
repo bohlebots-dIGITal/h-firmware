@@ -14,6 +14,8 @@ void action() {
   int turn = 0;
   bool shouldKick = false;
 
+  shouldKick = (gotBall && goalDirection == 0); //only kick if goal is straight forward and bot has ball
+
   int whatWeWorkWith = ballDirection;
   // if ball is invisible take the average of the last n directions the ball was
   if (!ballVisible) {
@@ -24,7 +26,7 @@ void action() {
   // aspired situation: drive with max speed to ball right in front of bot
   // clang-format off
   switch (abs(whatWeWorkWith)) {
-    case 0: direction = 0; speed = 100; shouldKick = true; break;
+    case 0: direction = 0; speed = 100;break;
     case 1: direction = 2; speed = 60; break;
     case 2: direction = 2; speed = 50; break;
     case 3: direction = 3; speed = 80; break;
