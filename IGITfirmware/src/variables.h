@@ -2,7 +2,7 @@ IGITBot igitBot = IGITBot();
 
 Pixy2I2C pixy;
 
-#define MAX_SPEED 60
+#define MAX_SPEED 50
 
 bool ballVisible = false;
 int ballDirection = 0;
