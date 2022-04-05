@@ -12,29 +12,26 @@ void action() {
   int direction = 0;
   int speed = 0;
   int turn = 0;
-  bool shouldKick = false;
-
-  shouldKick = (gotBall && goalDirection == 0); //only kick if goal is straight forward and bot has ball
 
   int whatWeWorkWith = ballDirection;
   // if ball is invisible take the average of the last n directions the ball was
-  if (!ballVisible) {
-    whatWeWorkWith =
-        average(lastBallDirections, sizeof(lastBallDirections) / sizeof(lastBallDirections[0]));
-  }
+  // visible in
+  if (!ballVisible) igitBot.fahre(0,0,0);
+    //whatWeWorkWith =
+        //average(lastBallDirections, sizeof(lastBallDirections) / sizeof(lastBallDirections[0]));
 
   // aspired situation: drive with max speed to ball right in front of bot
   // clang-format off
   switch (abs(whatWeWorkWith)) {
-    case 0: direction = 0; speed = 100;break;
-    case 1: direction = 2; speed = 60; break; // works this better??
-    case 2: direction = 2; speed = 50; break;
-    case 3: direction = 2; speed = 60; break;
-    case 4: direction = 3; speed = 60; break;
-    case 5: direction = 3; speed = 80; break;
-    case 6: direction = 4; speed = 80; break;
-    case 7: direction = 4; speed = 80; break;
-    case 8: direction = -2; speed = 100; break;
+  case 0: direction = 0; speed = 100; break;
+  case 1: direction = 2; speed = 60; break;
+  case 2: direction = 2; speed = 50; break;
+  case 3: direction = 3; speed = 80; break;
+  case 4: direction = 4; speed = 80; break;
+  case 5: direction = 4; speed = 100; break;
+  case 6: direction = 4; speed = 100; break;
+  case 7: direction = 4; speed = 100; break;
+  case 8: direction = -2; speed = 100; break;
   }
   // clang-format on
 
@@ -48,7 +45,8 @@ void action() {
   if (goalVisible) {
     cornerTimer = 0;
     turn = goalDirection;  // wenn Pixy tor sieht in torrichtung drehen
-  } else {
+  } 
+  else {
     if (cornerTimer > 1000) {  // steht in ecke
       if (goalSide == Right)
         turn = 7;
@@ -57,20 +55,16 @@ void action() {
       speed = 0;
       direction = 0;
       // direction:0, spd:0, turn:+/-7 => bot dreht sich auf der stelle richtung tor
-    } else {  // nicht in ecke aber tor wird nicht gesehen
-      // speed = 40;
-      if (whatWeWorkWith == 0)
-        turn = 0;
-      else
-        turn = (-igitBot.compass() / 5) /*-(side(direction*2)*10)*/;
-    }
+    } 
+    else {  // nicht in ecke aber tor wird nicht gesehen
+      //speed = 40;
+      if (whatWeWorkWith == 0) turn = 0;
+      else turn = (-igitBot.compass() / 5) /*-(side(direction*2)*10)*/;
   }
+  }
+  
 
   igitBot.fahre(direction, (speed * MAX_SPEED) / 100, turn);
-
-  if (shouldKick) {
-    igitBot.kick(KICK_TIME);
-  }
   if (ballVisible) {
     // shift all array values left by one cell
     size_t lastValuesLength = sizeof(lastBallDirections) / sizeof(int);

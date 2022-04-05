@@ -26,5 +26,3 @@ enum Direction { Right, Left };
 Direction goalSide;
 
 elapsedMillis cornerTimer = 0;
-
-#define KICK_TIME 20

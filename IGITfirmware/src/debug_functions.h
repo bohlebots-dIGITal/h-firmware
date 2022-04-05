@@ -13,11 +13,12 @@ void debug_SerialOutput() {
       "compass:                    %d\n\n"
 
       "goal side:                  %d\n"
+      "corner timer:                  %d\n"
       "-*-*-*-*-*-*-*-*-*-*-*-*-*-*-\n",
       ballVisible ? "true" : "false", ballDirection, average(lastBallDirections, 5),
       lastBallDirections[0], lastBallDirections[1], lastBallDirections[2], lastBallDirections[3],
       lastBallDirections[4], gotBall ? "true" : "false", goalVisible ? "true" : "false",
-      goalDirection, igitBot.compass(), goalSide);
+      goalDirection, igitBot.compass(), goalSide, cornerTimer);
 }
 
 int debugCount = 0;
