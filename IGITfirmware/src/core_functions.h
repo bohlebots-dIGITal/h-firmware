@@ -34,7 +34,7 @@ void action() {
     case 5: direction = 3; speed = 80; break;
     case 6: direction = 4; speed = 80; break;
     case 7: direction = 4; speed = 80; break;
-    case 8: direction = -2; speed = 100; break;
+    case 8: direction = 2; speed = 100; break;
   }
   // clang-format on
 
@@ -43,13 +43,13 @@ void action() {
 
   /* CORNER-SPECIFIC THINGS (eCkEnPrOgRaMm) */
 
-  // solange man der bot das tor sieht ~~(oder den ball nicht in der schale hat
+  // solange der bot das tor sieht ~~(oder den ball nicht in der schale hat
   // steht er nicht in der ecke
   if (goalVisible) {
     cornerTimer = 0;
     turn = goalDirection;  // wenn Pixy tor sieht in torrichtung drehen
   } else {
-    if (cornerTimer > 1000) {  // steht in ecke
+    if (cornerTimer > 1000 && abs(igitBot.compass()) < 20) {  // steht in ecke
       if (goalSide == Right)
         turn = 7;
       else
