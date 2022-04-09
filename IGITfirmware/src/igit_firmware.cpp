@@ -12,7 +12,7 @@
 
 void setup() {
   Serial.begin(115200);
-  // while (!Serial); // we dont seem to need that
+  while (!Serial); // we dont seem to need that
   //  do nothing until there is a serial connection available.
 
   Serial.println("initialization of bot");
@@ -37,7 +37,7 @@ void setup() {
     Serial.println("can bus started successfully.");
 
   pinMode(LIGHTBARRIER, INPUT);
-  pinMode(KICKER_PIN, OUTPUT);
+  //pinMode(KICKER_PIN, OUTPUT);
 
   // rainbow
   int colors[] = {RED, YELLOW, GREEN, CYAN, BLUE};
