@@ -75,14 +75,12 @@ void readButton() {
   if (igitBot.button(0, 1)) {
     gamestate.playing = true;
     setGamestate(&gamestate);
-    writeFlash();
     igitBot.led(0, 1, OFF);
     igitBot.led(0, 2, RED);
   }
   if (igitBot.button(0, 2)) {
     gamestate.playing = false;
     setGamestate(&gamestate);
-    writeFlash();
     igitBot.led(0, 1, GREEN);
     igitBot.led(0, 2, OFF);
   }
@@ -90,7 +88,6 @@ void readButton() {
     igitBot.setCompass();
     gamestate.head = head;
     setGamestate(&gamestate);
-    writeFlash();
   }
   if (igitBot.button(3, 2)) {
     Serial.printf("kicked.\n");

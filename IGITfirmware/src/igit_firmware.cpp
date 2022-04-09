@@ -71,7 +71,7 @@ void loop() {
   else
     igitBot.fahre(0, 0, 0);
 
-  Serial.println("asdf");
+  outputGamestate(&gamestate);
 
   // debugOutput(3);  // prints important values (measured/calculated) to serial
   // monitor every nth loop run
