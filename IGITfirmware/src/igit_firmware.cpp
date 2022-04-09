@@ -12,9 +12,8 @@
 
 void setup() {
   Serial.begin(115200);
-  //while (!Serial); // we dont seem to need that
-  // do nothing until there is a serial connection available.
-
+  // while (!Serial); // we dont seem to need that
+  //  do nothing until there is a serial connection available.
 
   Serial.println("initialization of bot");
   igitBot.setBotType(4);  // our bot has four wheels
@@ -31,7 +30,8 @@ void setup() {
   Serial.println("init can");
   if (!CAN.begin(500E3)) {
     Serial.println("can bus initialization failed - doing nothing");
-    while (1);
+    while (1)
+      ;
   }  // started CAN bus at 500 kbps
   else
     Serial.println("can bus started successfully.");
@@ -60,18 +60,20 @@ void setup() {
   igitBot.wait(1);
 
   if (!EEPROM.begin(EEPROM_SIZE)) Serial.println("EEPROM FAILED!!!");
-  flash_init(); // Initialising flash/EEPROM
+  flash_init();  // Initialising flash/EEPROM
 }
 
 void loop() {
   getData();  // reads out data from hardware
-  writeFlash();
+  // writeFlash();
   if (gamestate.playing)
     action();  // process data and act based on that
   else
     igitBot.fahre(0, 0, 0);
 
-   debugOutput(20);  // prints important values (measured/calculated) to serial
+  Serial.println("asdf");
+
+  // debugOutput(3);  // prints important values (measured/calculated) to serial
   // monitor every nth loop run
 
   igitBot.wait(10);  // prevents that esp runs too fast for can, i2c, pixy, etc.

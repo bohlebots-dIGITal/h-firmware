@@ -6,12 +6,11 @@ struct GameState {
   int head;
 };
 
-void getGamestate(GameState *gamestate) {
-  EEPROM.readBytes(0, gamestate, sizeof(GameState));
-}
+void getGamestate(GameState *gamestate) { EEPROM.readBytes(0, gamestate, sizeof(GameState)); }
 
 void setGamestate(GameState *gamestate) {
   EEPROM.writeBytes(0, gamestate, sizeof(GameState));
+  EEPROM.commit();
 }
 
 void outputGamestate(GameState *gamestate) {
