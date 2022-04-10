@@ -27,4 +27,8 @@ Direction goalSide;
 
 elapsedMillis cornerTimer = 0;
 
+bool kickOff = false;
+elapsedMillis kickOffTimer = 0;
+bool lastKickOffButton = false;
+
 #define KICK_TIME 20

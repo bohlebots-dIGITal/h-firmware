@@ -81,6 +81,8 @@ int led2Array[] = {0, 0, 0, 0, 0, 0, 0, 0};
 elapsedMillis lastKick;
 elapsedMillis wartezeit;
 
+enum KeyCode { SetPlay, SetIdle, SetCompass, ToggleKickOff, KickTest, Shift, None };
+
 class IGITBot {
  public:
   IGITBot() {
@@ -241,6 +243,7 @@ class IGITBot {
   void resetLEDs() {
     this->led(0, 1, GREEN);
     this->led(3, 1, MAGENTA);  // magenta cuz we dont want to irritate the other bots
+    this->led(3, 2, OFF);
     // für kompass-button-lampe das gleiche
   }
 
@@ -279,6 +282,40 @@ class IGITBot {
     if (number == 2) return (analogRead(INPUT2) < 2048);
     if (number == 3) return (analogRead(INPUT3) < 2048);
     if (number == 4) return (analogRead(INPUT4) < 2048);
+  }
+
+  //////////////////////////////////////////////////////////////
+  // NORMAL (front on top):
+  // SetPlay       SetIdle       SetCompass  Shift
+  //
+  // ///////////////////////////////////////////////////////////
+  // SHIFT PRESSED
+  // ToggleKickOff ------------- KickTest    Shift
+  //
+  //////////////////////////////////////////////////////////////
+  KeyCode keyCode() {
+    bool shiftPressed = this->button(3, 2);
+
+    if (this->button(0, 1)) {
+      if (shiftPressed) {
+        return ToggleKickOff;
+      }
+      return SetPlay;
+    } else if (this->button(0, 2)) {
+      if (shiftPressed) {
+        return None;
+      }
+      return SetIdle;
+    } else if (this->button(3, 1)) {
+      if (shiftPressed) {
+        return KickTest;
+      }
+      return SetCompass;
+    } else if (shiftPressed) {
+      return Shift;
+    }
+
+    return None;
   }
 
  private:
@@ -471,3 +508,13 @@ class IGITBot {
     }
   }
 };
+
+const char* keyCodeToString(KeyCode kc) {
+  const char* names[] = {"SetPlay",  "SetIdle", "SetCompass", "ToggleKickOff",
+                         "KickTest", "Shift",   "None"};
+  if (kc < 0 || kc > sizeof(names) / sizeof(char*)) {
+    return names[(int)None];
+  }
+
+  return names[(int)kc];
+}

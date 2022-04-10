@@ -1,6 +1,7 @@
 #pragma once
 #include <EEPROM.h>
 
+// neuen datentypen machen um weniger kopieren zu muessen
 struct GameState {
   bool playing;
   int head;

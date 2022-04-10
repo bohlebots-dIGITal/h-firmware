@@ -72,45 +72,79 @@ void readPixy() {
 }
 
 void readButton() {
-  if (igitBot.button(0, 1)) {
-    GameState oldGameState;
-    getGamestate(&oldGameState);
+  KeyCode keyCode = igitBot.keyCode();
+  Serial.printf("keycode %s (%d) received\n", keyCodeToString(keyCode), keyCode);
 
-    gamestate.playing = true;
-    if (oldGameState.playing != gamestate.playing) {
-      setGamestate(&gamestate);
-      outputGamestate(&gamestate);
+  switch (keyCode) {
+    case SetPlay: {
+      GameState oldGameState;
+      getGamestate(&oldGameState);
+
+      gamestate.playing = true;
+      if (oldGameState.playing != gamestate.playing) {
+        setGamestate(&gamestate);
+        outputGamestate(&gamestate);
+      }
+      igitBot.led(0, 1, OFF);
+      igitBot.led(0, 2, RED);
+      break;
     }
-    igitBot.led(0, 1, OFF);
-    igitBot.led(0, 2, RED);
-  }
-  if (igitBot.button(0, 2)) {
-    GameState oldGameState;
-    getGamestate(&oldGameState);
 
-    gamestate.playing = false;
-    if (oldGameState.playing != gamestate.playing) {
-      setGamestate(&gamestate);
-      outputGamestate(&gamestate);
+    case SetIdle: {
+      GameState oldGameState;
+      getGamestate(&oldGameState);
+
+      gamestate.playing = false;
+      if (oldGameState.playing != gamestate.playing) {
+        setGamestate(&gamestate);
+        outputGamestate(&gamestate);
+      }
+      igitBot.led(0, 1, GREEN);
+      igitBot.led(0, 2, OFF);
+      break;
     }
-    igitBot.led(0, 1, GREEN);
-    igitBot.led(0, 2, OFF);
-  }
-  if (igitBot.button(3, 1)) {
-    igitBot.setCompass();
-    gamestate.head = head;
+    case SetCompass: {
+      igitBot.setCompass();
+      gamestate.head = head;
 
-    GameState oldGameState;
-    getGamestate(&oldGameState);
+      GameState oldGameState;
+      getGamestate(&oldGameState);
 
-    if (oldGameState.head != gamestate.head) {
-      setGamestate(&gamestate);
-      outputGamestate(&gamestate);
+      if (oldGameState.head != gamestate.head) {
+        setGamestate(&gamestate);
+        outputGamestate(&gamestate);
+      }
     }
+    case KickTest: {
+      igitBot.kick(KICK_TIME);
+      break;
+    }
+    case ToggleKickOff: {
+      if (kickOffTimer > 30 && !lastKickOffButton) {
+        kickOff = !kickOff;
+        igitBot.led(0, 1, kickOff ? GREEN : RED);
+        kickOffTimer = 0;
+        lastKickOffButton = true;
+      }
+      break;
+    }
+    case KeyCode::Shift: {
+      igitBot.led(0, 1, kickOff ? GREEN : RED);
+      igitBot.led(3, 1, CYAN);
+      igitBot.led(3, 2, WHITE);
+      break;
+    }
+    case KeyCode::None: {
+      igitBot.resetLEDs();
+      break;
+    }
+
+    default:
+      break;
   }
-  if (igitBot.button(3, 2)) {
-    Serial.printf("kicked.\n");
-    // igitBot.kick(KICK_TIME);
+
+  if (keyCode != KeyCode::ToggleKickOff) {
+    lastKickOffButton = false;
   }
 }
 
