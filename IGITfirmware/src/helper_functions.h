@@ -45,7 +45,7 @@ void readPixy() {
     goalVisible = false;
     return;
   }
-  if (pixy.ccc.blocks[0].m_signature == signature) {
+  if (pixy.ccc.blocks[0].m_signature == gamestate.signature) {
     // signature 1 = goal we score on
     goalVisible = true;
     goalDirection = (pixy.ccc.blocks[0].m_x - 158) / 4;  // ERFAHRUNG
@@ -127,10 +127,16 @@ void readButton() {
     }
     case KeyCode::ToggleSignature: {
       if (signatureButtonTimer > 30 && !lastSignatureButton) {
-        if (signature == 1) {
-          signature = 2;
+        GameState oldGamestate;
+        getGamestate(&oldGamestate);
+
+        if (gamestate.signature == 1) {
+          gamestate.signature = 2;
         } else {
-          signature = 1;
+          gamestate.signature = 1;
+        }
+        if (gamestate.signature != oldGamestate.signature) {
+          setGamestate(&gamestate);
         }
 
         signatureButtonTimer = 0;
@@ -140,7 +146,7 @@ void readButton() {
     case KeyCode::Shift: {
       igitBot.led(0, 1, kickOff ? GREEN : RED);
       igitBot.led(3, 1, CYAN);
-      igitBot.led(0, 2, signature == 1 ? YELLOW : BLUE);
+      igitBot.led(0, 2, gamestate.signature == 1 ? YELLOW : BLUE);
       igitBot.led(3, 2, WHITE);
       break;
     }

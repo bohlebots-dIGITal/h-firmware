@@ -39,8 +39,6 @@ void setup() {
 
   pinMode(LIGHTBARRIER, INPUT);
   pinMode(KICKER_PIN, OUTPUT);
-  pinMode(LED_BUILTIN, OUTPUT);
-  digitalWrite(LED_BUILTIN, LOW);
 
   // rainbow
   int colors[] = {RED, YELLOW, GREEN, CYAN, BLUE};
@@ -61,8 +59,6 @@ void setup() {
   igitBot.resetLEDs();
 
   igitBot.wait(1);  //
-
-  if (!EEPROM.begin(EEPROM_SIZE)) Serial.println("EEPROM FAILED!!!");
 }
 
 void loop() {
@@ -75,7 +71,7 @@ void loop() {
   } else
     igitBot.drive(0, 0, 0);
 
-  // outputGamestate(&gamestate);
+  outputGamestate(&gamestate);
 
   // debugOutput(3);  // prints important values (measured/calculated) to serial
   // monitor every nth loop run

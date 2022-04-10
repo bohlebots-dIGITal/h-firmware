@@ -266,7 +266,7 @@ class IGITBot {
   }
 
   void statusLEDs(bool ballVisible, bool gotBall, bool goalVisible, bool inCorner) {
-    this->led(0, 1, gotBall ? BLUE : (ballVisible ? WHITE : OFF));
+    this->led(0, 1, gotBall ? GREEN : (ballVisible ? WHITE : OFF));
     this->led(0, 2, RED);
     this->led(3, 1, goalVisible ? WHITE : OFF);
     this->led(3, 2, inCorner ? WHITE : OFF);
@@ -350,7 +350,7 @@ class IGITBot {
   }
 
   int kompass_org() {
-    unsigned char high_byte, low_byte, angle8;
+    unsigned char high_byte, low_byte;
     unsigned int angle16;
     Wire.beginTransmission(KOMPASS_ADRESSE);
     Wire.write(ANGLE_8);
@@ -358,7 +358,6 @@ class IGITBot {
     Wire.requestFrom(KOMPASS_ADRESSE, 3);
     while (Wire.available() < 3)
       ;
-    angle8 = Wire.read();  // Read back the 5 bytes
     high_byte = Wire.read();
     low_byte = Wire.read();
     angle16 = high_byte;  // Calculate 16 bit angle

@@ -2,7 +2,7 @@ IGITBot igitBot = IGITBot();
 
 Pixy2I2C pixy;
 
-#define SPEED_PERCENT 60
+#define SPEED_PERCENT 50
 
 bool ballVisible = false;
 int ballDirection = 0;
@@ -21,7 +21,7 @@ int lastBallDirections[5] = {0, 0, 0, 0, 0};
 
 GameState gamestate;
 
-enum Direction { Right, Left };
+enum Direction { Right, Left, Front };
 
 Direction goalSide;
 
@@ -35,5 +35,3 @@ elapsedMillis signatureButtonTimer = 0;
 bool lastSignatureButton = false;
 
 #define KICK_TIME 20
-
-int signature = 1;

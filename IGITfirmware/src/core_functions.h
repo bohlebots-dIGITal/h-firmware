@@ -12,6 +12,13 @@ void getData() {
   readLightbarrier();
 }
 
+void altAction() {
+  int speed = 0;
+  int direction = directionBehindBall(&speed);
+
+  igitBot.drive(direction, speed, goalDirection * -1);
+}
+
 void action() {
   int direction = 0;
   int speed = 0;
@@ -110,3 +117,91 @@ void getOutOfCorner() {
 }
 
 bool isInCorner() { return (ballDirection == 0 && cornerTimer > 1000); }
+
+Direction sideOfBot() {
+  if (gotBall) {
+    if (igitBot.compass() != 0) {
+      return igitBot.compass() < 0 ? Direction::Left : Direction::Right;
+    } else {
+      return Direction::Front;
+    }
+  } else {
+    if (goalDirection != 0)
+      return goalDirection < 0 ? Direction::Left : Direction::Right;
+    else
+      Direction::Front;
+  }
+}
+
+int directionBehindBall(int *speed) {
+  *speed = 50;
+  // if (ballDirection != lastBallDirection) {
+  //   lastBallDirection = ballDirection;
+  //   sameBallDirection = 0;
+  // }
+  switch (ballDirection) {
+    case 0:
+      *speed = 50;
+      return 0;
+
+    case 1:
+      *speed = 45;
+      return 2;
+    case -1:
+      *speed = 45;
+      return -2;
+
+    case 2:
+      *speed = 40;
+      return 4;
+    case -2:
+      *speed = 40;
+      return -4;
+
+    case 3:
+      *speed = 40;
+      return 4;
+    case -3:
+      *speed = 40;
+      return -4;
+
+    case 4:
+      *speed = 40;
+      return 4;
+    case -4:
+      *speed = 40;
+      return -4;
+
+    case 5:
+      *speed = 50;
+      return 6;
+    case -5:
+      *speed = 50;
+      return -6;
+
+    case 6:
+      *speed = 60;
+      return 8;
+    case -6:
+      *speed = 60;
+      return 8;
+
+    case 7:
+      *speed = 50;
+      return -6;
+    case -7:
+      *speed = 50;
+      return 6;
+
+    case 8:
+      *speed = 60;
+      switch (sideOfBot()) {
+        case Direction::Right:
+          // links über mitte fahren
+          return -6;
+        case Direction::Left:
+          // rechts über mitte fahren
+          return 6;
+      }
+  }
+}
