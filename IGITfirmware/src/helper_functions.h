@@ -48,7 +48,8 @@ void readPixy() {
   if (pixy.ccc.blocks[0].m_signature == gamestate.signature) {
     // signature 1 = goal we score on
     goalVisible = true;
-    goalDirection = (pixy.ccc.blocks[0].m_x - 158) / 4;  // ERFAHRUNG
+    // goalDirection = (pixy.ccc.blocks[0].m_x - 158) / 4;  // ERFAHRUNG
+    goalDirection = -(pixy.ccc.blocks[0].m_x - 158) / 2;
     goalDist = pixy.ccc.blocks[0].m_y;
 
     if (goalDirection > 0) {
@@ -127,17 +128,12 @@ void readButton() {
     }
     case KeyCode::ToggleSignature: {
       if (signatureButtonTimer > 30 && !lastSignatureButton) {
-        GameState oldGamestate;
-        getGamestate(&oldGamestate);
-
         if (gamestate.signature == 1) {
           gamestate.signature = 2;
         } else {
           gamestate.signature = 1;
         }
-        if (gamestate.signature != oldGamestate.signature) {
-          setGamestate(&gamestate);
-        }
+        setGamestate(&gamestate);
 
         signatureButtonTimer = 0;
         lastSignatureButton = true;

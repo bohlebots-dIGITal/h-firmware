@@ -58,7 +58,9 @@ void setup() {
 
   igitBot.resetLEDs();
 
-  igitBot.wait(1);  //
+  while (!EEPROM.begin(EEPROM_SIZE)) {
+    igitBot.wait(1);  //
+  }
 }
 
 void loop() {
@@ -67,7 +69,7 @@ void loop() {
   if (gamestate.playing) {
     // igitBot.drive(4, 100, 0);
     igitBot.statusLEDs(ballVisible, gotBall, goalVisible, false);
-    action();  // process data and act based on that
+    altAction();  // process data and act based on that
   } else
     igitBot.drive(0, 0, 0);
 
