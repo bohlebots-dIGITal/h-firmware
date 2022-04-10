@@ -14,14 +14,15 @@ void action() {
   int turn = 0;
   bool shouldKick = false;
 
-  shouldKick = (gotBall && goalDirection == 0); //only kick if goal is straight forward and bot has ball
+  shouldKick =
+      (gotBall && goalDirection == 0);  // only kick if goal is straight forward and bot has ball
 
   int whatWeWorkWith = ballDirection;
   // if ball is invisible take the average of the last n directions the ball was
-  if (!ballVisible) {
-    whatWeWorkWith =
-        average(lastBallDirections, sizeof(lastBallDirections) / sizeof(lastBallDirections[0]));
-  }
+  // if (!ballVisible) {
+  //   whatWeWorkWith =
+  //       average(lastBallDirections, sizeof(lastBallDirections) / sizeof(lastBallDirections[0]));
+  // }
 
   // aspired situation: drive with max speed to ball right in front of bot
   // clang-format off

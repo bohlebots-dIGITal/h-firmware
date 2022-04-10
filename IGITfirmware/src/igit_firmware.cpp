@@ -60,7 +60,8 @@ void setup() {
   igitBot.wait(1);
 
   if (!EEPROM.begin(EEPROM_SIZE)) Serial.println("EEPROM FAILED!!!");
-  flash_init();  // Initialising flash/EEPROM
+
+  motorTest();
 }
 
 void loop() {
