@@ -73,25 +73,44 @@ void readPixy() {
 
 void readButton() {
   if (igitBot.button(0, 1)) {
+    GameState oldGameState;
+    getGamestate(&oldGameState);
+
     gamestate.playing = true;
-    setGamestate(&gamestate);
+    if (oldGameState.playing != gamestate.playing) {
+      setGamestate(&gamestate);
+      outputGamestate(&gamestate);
+    }
     igitBot.led(0, 1, OFF);
     igitBot.led(0, 2, RED);
   }
   if (igitBot.button(0, 2)) {
+    GameState oldGameState;
+    getGamestate(&oldGameState);
+
     gamestate.playing = false;
-    setGamestate(&gamestate);
+    if (oldGameState.playing != gamestate.playing) {
+      setGamestate(&gamestate);
+      outputGamestate(&gamestate);
+    }
     igitBot.led(0, 1, GREEN);
     igitBot.led(0, 2, OFF);
   }
   if (igitBot.button(3, 1)) {
     igitBot.setCompass();
     gamestate.head = head;
-    setGamestate(&gamestate);
+
+    GameState oldGameState;
+    getGamestate(&oldGameState);
+
+    if (oldGameState.head != gamestate.head) {
+      setGamestate(&gamestate);
+      outputGamestate(&gamestate);
+    }
   }
   if (igitBot.button(3, 2)) {
     Serial.printf("kicked.\n");
-    //igitBot.kick(KICK_TIME);
+    // igitBot.kick(KICK_TIME);
   }
 }
 

@@ -12,7 +12,8 @@
 
 void setup() {
   Serial.begin(115200);
-  while (!Serial); // we dont seem to need that
+  while (!Serial)
+    ;  // we dont seem to need that
   //  do nothing until there is a serial connection available.
 
   Serial.println("initialization of bot");
@@ -24,7 +25,7 @@ void setup() {
   pixy.init();
   Serial.println("pixy initialized");
 
-  getGamestate(&gamestate); // do we still need that?
+  getGamestate(&gamestate);  // do we still need that?
   head = gamestate.head;
 
   Serial.println("init can");
@@ -37,7 +38,7 @@ void setup() {
     Serial.println("can bus started successfully.");
 
   pinMode(LIGHTBARRIER, INPUT);
-  //pinMode(KICKER_PIN, OUTPUT);
+  // pinMode(KICKER_PIN, OUTPUT);
 
   // rainbow
   int colors[] = {RED, YELLOW, GREEN, CYAN, BLUE};
@@ -57,11 +58,9 @@ void setup() {
 
   igitBot.resetLEDs();
 
-  igitBot.wait(1); // 
+  igitBot.wait(1);  //
 
   if (!EEPROM.begin(EEPROM_SIZE)) Serial.println("EEPROM FAILED!!!");
-
-  motorTest();
 }
 
 void loop() {
@@ -72,9 +71,9 @@ void loop() {
   else
     igitBot.fahre(0, 0, 0);
 
-  //outputGamestate(&gamestate);
+  // outputGamestate(&gamestate);
 
-  debugOutput(3);  // prints important values (measured/calculated) to serial
+  // debugOutput(3);  // prints important values (measured/calculated) to serial
   // monitor every nth loop run
 
   igitBot.wait(10);  // prevents that esp runs too fast for can, i2c, pixy, etc.
