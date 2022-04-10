@@ -2,7 +2,7 @@ IGITBot igitBot = IGITBot();
 
 Pixy2I2C pixy;
 
-#define MAX_SPEED 60
+#define SPEED_PERCENT 60
 
 bool ballVisible = false;
 int ballDirection = 0;
@@ -31,4 +31,9 @@ bool kickOff = false;
 elapsedMillis kickOffTimer = 0;
 bool lastKickOffButton = false;
 
+elapsedMillis signatureButtonTimer = 0;
+bool lastSignatureButton = false;
+
 #define KICK_TIME 20
+
+int signature = 1;

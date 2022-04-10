@@ -83,7 +83,16 @@ int led2Array[] = {0, 0, 0, 0, 0, 0, 0, 0};
 elapsedMillis lastKick;
 elapsedMillis wartezeit;
 
-enum KeyCode { SetPlay, SetIdle, SetCompass, ToggleKickOff, KickTest, Shift, None };
+enum KeyCode {
+  SetPlay,
+  SetIdle,
+  SetCompass,
+  ToggleKickOff,
+  KickTest,
+  ToggleSignature,
+  Shift,
+  None
+};
 
 class IGITBot {
  public:
@@ -257,7 +266,7 @@ class IGITBot {
   }
 
   void statusLEDs(bool ballVisible, bool gotBall, bool goalVisible, bool inCorner) {
-    this->led(0, 1, gotBall ? BLUE: (ballVisible ? WHITE : OFF));
+    this->led(0, 1, gotBall ? BLUE : (ballVisible ? WHITE : OFF));
     this->led(0, 2, RED);
     this->led(3, 1, goalVisible ? WHITE : OFF);
     this->led(3, 2, inCorner ? WHITE : OFF);
@@ -302,11 +311,11 @@ class IGITBot {
 
   //////////////////////////////////////////////////////////////
   // NORMAL (front on top):
-  // SetPlay       SetIdle       SetCompass  Shift
+  // SetPlay         SetIdle         SetCompass    Shift
   //
   // ///////////////////////////////////////////////////////////
   // SHIFT PRESSED
-  // ToggleKickOff ------------- KickTest    Shift
+  // ToggleKickOff   ToggleSignature KickTest      Shift
   //
   //////////////////////////////////////////////////////////////
   KeyCode keyCode() {
@@ -319,7 +328,7 @@ class IGITBot {
       return SetPlay;
     } else if (this->button(0, 2)) {
       if (shiftPressed) {
-        return Shift;
+        return ToggleSignature;
       }
       return SetIdle;
     } else if (this->button(3, 1)) {
@@ -526,8 +535,8 @@ class IGITBot {
 };
 
 const char* keyCodeToString(KeyCode kc) {
-  const char* names[] = {"SetPlay",  "SetIdle", "SetCompass", "ToggleKickOff",
-                         "KickTest", "Shift",   "None"};
+  const char* names[] = {"SetPlay",  "SetIdle",         "SetCompass", "ToggleKickOff",
+                         "KickTest", "ToggleSignature", "Shift",      "None"};
   if (kc < 0 || kc > sizeof(names) / sizeof(char*)) {
     return names[(int)None];
   }

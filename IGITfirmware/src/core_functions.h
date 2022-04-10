@@ -1,3 +1,7 @@
+// prototype functions
+void getOutOfCorner();
+bool isInCorner();
+
 // ballDirection | ball directions (IR) are from -7 to 8 -> 16 directions
 // direction     | driving directions (motor) are from -3 to 4 -> 8 directions
 
@@ -70,7 +74,7 @@ void action() {
     // }
   }
 
-  igitBot.drive(direction, (speed * MAX_SPEED) / 100, turn);
+  igitBot.drive(direction, (speed * SPEED_PERCENT) / 100, turn);
   /*
     if (shouldKick) {
       igitBot.kick(KICK_TIME);

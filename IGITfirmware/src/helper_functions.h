@@ -45,9 +45,7 @@ void readPixy() {
     goalVisible = false;
     return;
   }
-  // if goal seen
-  // the goal we are striking at is always signature 1
-  if (pixy.ccc.blocks[0].m_signature == 1) {
+  if (pixy.ccc.blocks[0].m_signature == signature) {
     // signature 1 = goal we score on
     goalVisible = true;
     goalDirection = (pixy.ccc.blocks[0].m_x - 158) / 4;  // ERFAHRUNG
@@ -127,9 +125,22 @@ void readButton() {
       }
       break;
     }
+    case KeyCode::ToggleSignature: {
+      if (signatureButtonTimer > 30 && !lastSignatureButton) {
+        if (signature == 1) {
+          signature = 2;
+        } else {
+          signature = 1;
+        }
+
+        signatureButtonTimer = 0;
+        lastSignatureButton = true;
+      }
+    }
     case KeyCode::Shift: {
       igitBot.led(0, 1, kickOff ? GREEN : RED);
       igitBot.led(3, 1, CYAN);
+      igitBot.led(0, 2, signature == 1 ? YELLOW : BLUE);
       igitBot.led(3, 2, WHITE);
       break;
     }
@@ -143,6 +154,10 @@ void readButton() {
 
   if (keyCode != KeyCode::ToggleKickOff) {
     lastKickOffButton = false;
+  }
+
+  if (keyCode != KeyCode::ToggleSignature) {
+    lastSignatureButton = false;
   }
 }
 

@@ -69,6 +69,7 @@ void loop() {
   getData();  // reads out data from hardware
   // writeFlash();
   if (gamestate.playing) {
+    // igitBot.drive(4, 100, 0);
     igitBot.statusLEDs(ballVisible, gotBall, goalVisible, false);
     action();  // process data and act based on that
   } else
