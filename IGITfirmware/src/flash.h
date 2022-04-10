@@ -1,6 +1,5 @@
 #include <EEPROM.h>
 byte flashByte[4] = {0, 0, 0, 0};
-#define EEPROM_SIZE 64
 
 void readEEPROM() {
   for (int i = 0; i < 4; i++) {

@@ -25,6 +25,10 @@ void setup() {
   pixy.init();
   Serial.println("pixy initialized");
 
+  while (!EEPROM.begin(128)) {
+    igitBot.wait(1);
+  }
+
   getGamestate(&gamestate);  // do we still need that?
   head = gamestate.head;
 
@@ -44,6 +48,7 @@ void setup() {
   int colors[] = {RED, YELLOW, GREEN, CYAN, BLUE};
   for (int j = 0; j < 2; j++) {
     for (int i = 0; i < 5; i++) {
+      Serial.printf("j: %d i: %d\n", j, i);
       igitBot.led(0, 1, colors[i]);
       igitBot.led(0, 2, colors[i]);
       igitBot.led(3, 1, colors[i]);
@@ -57,10 +62,6 @@ void setup() {
   igitBot.led(3, 2, OFF);
 
   igitBot.resetLEDs();
-
-  while (!EEPROM.begin(EEPROM_SIZE)) {
-    igitBot.wait(1);  //
-  }
 }
 
 void loop() {
@@ -70,14 +71,14 @@ void loop() {
     // igitBot.drive(4, 100, 0);
     igitBot.statusLEDs(ballVisible, gotBall, goalVisible, false);
     altAction();  // process data and act based on that
-  } else
+  } else {
     igitBot.drive(0, 0, 0);
+  }
 
   outputGamestate(&gamestate);
 
   // debugOutput(3);  // prints important values (measured/calculated) to serial
   // monitor every nth loop run
 
-  digitalWrite(LED_BUILTIN, LOW);
   igitBot.wait(10);  // prevents that esp runs too fast for can, i2c, pixy, etc.
 }

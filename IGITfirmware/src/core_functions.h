@@ -1,8 +1,7 @@
 // prototype functions
 void getOutOfCorner();
 bool isInCorner();
-int directionBehindBall(int *);
-
+int directionBehindBall(int *);  // NIELS WHY??????????
 // ballDirection | ball directions (IR) are from -7 to 8 -> 16 directions
 // direction     | driving directions (motor) are from -3 to 4 -> 8 directions
 
@@ -14,9 +13,8 @@ void getData() {
 }
 
 void altAction() {
-  int speed = 0;
-  int direction = directionBehindBall(&speed);
 
+  int speed = 0;
   if (ballVisible) {
     if (kickOff) {
       // nur effektiv wenn bot seitlich gestellt wird, damit er eine kurve um
@@ -25,7 +23,6 @@ void altAction() {
       igitBot.drive(0, 75, goalDirection / -2);
       igitBot.wait(500);
     }
-
     else {
       if (isInCorner()) {
         getOutOfCorner();
@@ -41,7 +38,7 @@ void altAction() {
           }
         } else {
           // ball nicht in Ballschale
-          igitBot.drive(directionBehindBall(nullptr), 30, igitBot.compass() / -5);
+          igitBot.drive(directionBehindBall(&speed), speed, igitBot.compass() / -5);
         }
       }
     }
