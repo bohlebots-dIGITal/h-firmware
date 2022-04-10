@@ -10,6 +10,8 @@
 #define MAGENTA 6
 #define WHITE 7
 
+#define LED_BUILTIN 2
+
 /*
  * Festlegung der Motoren im bot-type-Betrieb
  * type 2 : motor rechts 1, Motor links 2
@@ -244,7 +246,21 @@ class IGITBot {
     this->led(0, 1, GREEN);
     this->led(3, 1, MAGENTA);  // magenta cuz we dont want to irritate the other bots
     this->led(3, 2, OFF);
-    // für kompass-button-lampe das gleiche
+    this->led(0, 2, OFF);
+  }
+
+  void allLEDs(int color) {
+    this->led(0, 1, color);
+    this->led(0, 2, color);
+    this->led(3, 1, color);
+    this->led(3, 2, color);
+  }
+
+  void statusLEDs(bool ballVisible, bool gotBall, bool goalVisible, bool inCorner) {
+    this->led(0, 1, gotBall ? BLUE: (ballVisible ? WHITE : OFF));
+    this->led(0, 2, RED);
+    this->led(3, 1, goalVisible ? WHITE : OFF);
+    this->led(3, 2, inCorner ? WHITE : OFF);
   }
 
   // actuates the kicking unit
@@ -303,7 +319,7 @@ class IGITBot {
       return SetPlay;
     } else if (this->button(0, 2)) {
       if (shiftPressed) {
-        return None;
+        return Shift;
       }
       return SetIdle;
     } else if (this->button(3, 1)) {

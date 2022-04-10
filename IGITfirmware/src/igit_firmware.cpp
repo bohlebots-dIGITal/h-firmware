@@ -38,7 +38,9 @@ void setup() {
     Serial.println("can bus started successfully.");
 
   pinMode(LIGHTBARRIER, INPUT);
-  // pinMode(KICKER_PIN, OUTPUT);
+  pinMode(KICKER_PIN, OUTPUT);
+  pinMode(LED_BUILTIN, OUTPUT);
+  digitalWrite(LED_BUILTIN, LOW);
 
   // rainbow
   int colors[] = {RED, YELLOW, GREEN, CYAN, BLUE};
@@ -66,9 +68,10 @@ void setup() {
 void loop() {
   getData();  // reads out data from hardware
   // writeFlash();
-  if (gamestate.playing)
+  if (gamestate.playing) {
+    igitBot.statusLEDs(ballVisible, gotBall, goalVisible, false);
     action();  // process data and act based on that
-  else
+  } else
     igitBot.fahre(0, 0, 0);
 
   // outputGamestate(&gamestate);
@@ -76,5 +79,6 @@ void loop() {
   // debugOutput(3);  // prints important values (measured/calculated) to serial
   // monitor every nth loop run
 
+  digitalWrite(LED_BUILTIN, LOW);
   igitBot.wait(10);  // prevents that esp runs too fast for can, i2c, pixy, etc.
 }

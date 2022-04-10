@@ -73,7 +73,7 @@ void readPixy() {
 
 void readButton() {
   KeyCode keyCode = igitBot.keyCode();
-  Serial.printf("keycode %s (%d) received\n", keyCodeToString(keyCode), keyCode);
+  // Serial.printf("keycode %s (%d) received\n", keyCodeToString(keyCode), keyCode);
 
   switch (keyCode) {
     case SetPlay: {
@@ -85,8 +85,7 @@ void readButton() {
         setGamestate(&gamestate);
         outputGamestate(&gamestate);
       }
-      igitBot.led(0, 1, OFF);
-      igitBot.led(0, 2, RED);
+      igitBot.allLEDs(OFF);
       break;
     }
 
@@ -99,8 +98,7 @@ void readButton() {
         setGamestate(&gamestate);
         outputGamestate(&gamestate);
       }
-      igitBot.led(0, 1, GREEN);
-      igitBot.led(0, 2, OFF);
+      igitBot.resetLEDs();
       break;
     }
     case SetCompass: {
@@ -114,6 +112,7 @@ void readButton() {
         setGamestate(&gamestate);
         outputGamestate(&gamestate);
       }
+      break;
     }
     case KickTest: {
       igitBot.kick(KICK_TIME);
@@ -134,12 +133,11 @@ void readButton() {
       igitBot.led(3, 2, WHITE);
       break;
     }
-    case KeyCode::None: {
-      igitBot.resetLEDs();
-      break;
-    }
 
     default:
+      if (!gamestate.playing) {
+        igitBot.resetLEDs();
+      }
       break;
   }
 
