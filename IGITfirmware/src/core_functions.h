@@ -50,24 +50,27 @@ void action() {
     cornerTimer = 0;
     turn = goalDirection;  // wenn Pixy tor sieht in torrichtung drehen
   } else {
-    if (cornerTimer > 1000 && abs(igitBot.compass()) < 20) {  // steht in ecke
-      if (goalSide == Right)
-        turn = 7;
-      else
-        turn = -7;
-      speed = 0;
-      direction = 0;
-      // direction:0, spd:0, turn:+/-7 => bot dreht sich auf der stelle richtung tor
-    } else {  // nicht in ecke aber tor wird nicht gesehen
-      // speed = 40;
-      if (whatWeWorkWith == 0)
-        turn = 0;
-      else
-        turn = (-igitBot.compass() / 5) /*-(side(direction*2)*10)*/;
+    if (isInCorner()) {
+      getOutOfCorner();
     }
+    // if (cornerTimer > 1000 && abs(igitBot.compass()) < 20) {  // steht in ecke
+    //   if (goalSide == Right)
+    //     turn = 7;
+    //   else
+    //     turn = -7;
+    //   speed = 0;
+    //   direction = 0;
+    //   // direction:0, spd:0, turn:+/-7 => bot dreht sich auf der stelle richtung tor
+    // } else {  // nicht in ecke aber tor wird nicht gesehen
+    //   // speed = 40;
+    //   if (whatWeWorkWith == 0)
+    //     turn = 0;
+    //   else
+    //     turn = (-igitBot.compass() / 5) /*-(side(direction*2)*10)*/;
+    // }
   }
 
-  igitBot.fahre(direction, (speed * MAX_SPEED) / 100, turn);
+  igitBot.drive(direction, (speed * MAX_SPEED) / 100, turn);
   /*
     if (shouldKick) {
       igitBot.kick(KICK_TIME);
@@ -85,3 +88,21 @@ void action() {
     lastBallDirections[lastValuesLength - 1] = ballDirection;
   }
 }
+
+void getOutOfCorner() {
+  if (goalDirection > 0) {
+    if (igitBot.compass() > -20) {
+      igitBot.drive(0, 0, side(goalDirection) * -15);
+    } else {
+      igitBot.drive(0, 55, side(goalDirection) * -15);
+    }
+  } else {
+    if (igitBot.compass() < 20) {
+      igitBot.drive(0, 0, side(goalDirection) * -15);
+    } else {
+      igitBot.drive(0, 55, side(goalDirection) * -15);
+    }
+  }
+}
+
+bool isInCorner() { return (ballDirection == 0 && cornerTimer > 1000) }

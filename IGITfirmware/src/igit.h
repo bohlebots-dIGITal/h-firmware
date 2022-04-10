@@ -172,7 +172,7 @@ class IGITBot {
     if ((number > 0) && (number < 5)) ledcWrite(number, pwm);
   }
 
-  void fahre(int richtung, int geschw, int dreh) {
+  void drive(int richtung, int geschw, int dreh) {
     if (bot_type == 2) fahre2(richtung, geschw, dreh);
     if (bot_type == 3) fahre3(richtung, geschw, dreh);
     if (bot_type == 4) fahre4(richtung, geschw, dreh);

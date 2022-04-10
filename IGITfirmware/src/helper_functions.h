@@ -58,9 +58,9 @@ void readPixy() {
     } else {
       goalSide = Left;
     }
+
     // Serial.println("dist: "+String(goalDist));
   }
-
   // goal not seen
   else {
     goalVisible = false;

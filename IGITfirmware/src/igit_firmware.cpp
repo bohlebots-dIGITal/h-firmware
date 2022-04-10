@@ -72,7 +72,7 @@ void loop() {
     igitBot.statusLEDs(ballVisible, gotBall, goalVisible, false);
     action();  // process data and act based on that
   } else
-    igitBot.fahre(0, 0, 0);
+    igitBot.drive(0, 0, 0);
 
   // outputGamestate(&gamestate);
 
