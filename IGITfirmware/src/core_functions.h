@@ -12,10 +12,10 @@ void action() {
   int direction = 0;
   int speed = 0;
   int turn = 0;
-  bool shouldKick = false;
+  // bool shouldKick = false;
 
-  shouldKick =
-      (gotBall && goalDirection == 0);  // only kick if goal is straight forward and bot has ball
+  // shouldKick = (gotBall && goalDirection == 0); //only kick if goal is straight forward and bot
+  // has ball
 
   int whatWeWorkWith = ballDirection;
   // if ball is invisible take the average of the last n directions the ball was
@@ -35,7 +35,7 @@ void action() {
     case 5: direction = 3; speed = 80; break;
     case 6: direction = 4; speed = 80; break;
     case 7: direction = 4; speed = 80; break;
-    case 8: direction = 2; speed = 100; break;
+    case 8: direction = -2; speed = 100; break;
   }
   // clang-format on
 
@@ -68,10 +68,11 @@ void action() {
   }
 
   igitBot.fahre(direction, (speed * MAX_SPEED) / 100, turn);
-
-  if (shouldKick) {
-    igitBot.kick(KICK_TIME);
-  }
+  /*
+    if (shouldKick) {
+      igitBot.kick(KICK_TIME);
+    }
+    */
   if (ballVisible) {
     // shift all array values left by one cell
     size_t lastValuesLength = sizeof(lastBallDirections) / sizeof(int);
