@@ -105,4 +105,4 @@ void getOutOfCorner() {
   }
 }
 
-bool isInCorner() { return (ballDirection == 0 && cornerTimer > 1000) }
+bool isInCorner() { return (ballDirection == 0 && cornerTimer > 1000); }
