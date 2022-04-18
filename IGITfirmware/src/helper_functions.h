@@ -27,8 +27,7 @@ void readCan() {
   while (CAN.available()) {
     int irData = CAN.read();
     ballDirection = (irData / 16) - 7;
-    ballDir_drivable = (ballDirection + side(ballDirection)) /
-                       2;  // bohlebots header just has directions -3 to 4 as drivable
+    ballDir_drivable = (ballDirection + side(ballDirection)) / 2;  // bohlebots header just has directions -3 to 4 as drivable
     int zone = irData % 16;
 
     if (zone < 1)

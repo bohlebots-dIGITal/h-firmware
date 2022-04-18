@@ -22,8 +22,15 @@ void action() {
 
   int whatWeWorkWith = ballDirection;
 
-  // aspired situation: drive with max speed to ball right in front of bot
-  // clang-format off
+  // drive around enemy at start of game - bot has to be turned for it to work
+  if (kickOff) {
+    kickOff = false;
+    igitBot.drive(0, 75, goalDirection / -2);
+    igitBot.wait(500);
+  } 
+  else {
+    // aspired situation: drive with max speed to ball right in front of bot
+    // clang-format off
   switch (abs(whatWeWorkWith)) {
     case 0: direction = 0; speed = 100;  break;
     case 1: direction = 2; speed = 60;   break; // works this better??
@@ -35,29 +42,30 @@ void action() {
     case 7: direction = 4; speed = 80;   break;
     case 8: direction = -2; speed = 100; break;
   }
-  // clang-format on
+    // clang-format on
 
-  if (whatWeWorkWith < 0) direction = -direction;
-  // left or right einbauen
+    if (whatWeWorkWith < 0) direction = -direction;
+    // left or right einbauen
 
-  /* CORNER-SPECIFIC THINGS (eCkEnPrOgRaMm) */
+    /* CORNER-SPECIFIC THINGS (eCkEnPrOgRaMm) */
 
-  // solange der bot das tor sieht ~~(oder den ball nicht in der schale hat
-  // steht er nicht in der ecke
-  if (goalVisible) {
-    cornerTimer = 0;
-    turn = goalDirection;  // wenn Pixy tor sieht in torrichtung drehen
-  } else {
-    if (isInCorner()) {
-      getOutOfCorner();
+    // solange der bot das tor sieht ~~(oder den ball nicht in der schale hat
+    // steht er nicht in der ecke
+    if (goalVisible) {
+      cornerTimer = 0;
+      turn = goalDirection;  // wenn Pixy tor sieht in torrichtung drehen
     } else {
-      turn = -igitBot.compass() / 5;
+      if (isInCorner()) {
+        getOutOfCorner();
+      } else {
+        turn = -igitBot.compass() / 5;
+      }
     }
-  }
 
-  igitBot.drive(direction, (speed * SPEED_PERCENT) / 100, turn);
-  if (shouldKick) {
-    igitBot.kick(KICK_TIME);
+    igitBot.drive(direction, (speed * SPEED_PERCENT) / 100, turn);
+    if (shouldKick) {
+      igitBot.kick(KICK_TIME);
+    }
   }
 }
 
