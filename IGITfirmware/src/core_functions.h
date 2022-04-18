@@ -25,10 +25,11 @@ void action() {
   // drive around enemy at start of game - bot has to be turned for it to work
   if (kickOff) {
     kickOff = false;
+    // TODO: use compass if goalDirection isn't visible
     igitBot.drive(0, 75, goalDirection / -2);
+
     igitBot.wait(500);
-  } 
-  else {
+  } else {
     // aspired situation: drive with max speed to ball right in front of bot
     // clang-format off
   switch (abs(whatWeWorkWith)) {
