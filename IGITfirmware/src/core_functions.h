@@ -69,17 +69,17 @@ void action() {
 }
 
 void getOutOfCorner() {
-  if (goalDirection > 0) { //in linker ecke
+  if (side(goalDirection) == Direction::Right) {  // in left corner
     if (igitBot.compass() > -20) {
-      igitBot.drive(0, 0, side(goalDirection) * 15);
+      igitBot.drive(4, 35, side(goalDirection) * -15);
     } else {
-      igitBot.drive(0, 55, side(goalDirection) * 15);
+      igitBot.drive(0, 55, side(goalDirection) * -15);
     }
   } else {
     if (igitBot.compass() < 20) {
-      igitBot.drive(0, 0, side(goalDirection) * 15);
+      igitBot.drive(4, 40, side(goalDirection) * -15);
     } else {
-      igitBot.drive(0, 55, side(goalDirection) * 15);
+      igitBot.drive(0, 55, side(goalDirection) * -15);
     }
   }
 }
