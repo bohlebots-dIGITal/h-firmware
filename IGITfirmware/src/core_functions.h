@@ -26,7 +26,7 @@ void action() {
   if (kickOff) {
     kickOff = false;
     // TODO: use compass if goalDirection isn't visible
-    igitBot.drive(0, 75, goalDirection / -2);
+    igitBot.drive(0, 100, goalDirection / -2);
 
     igitBot.wait(500);
   } else {
