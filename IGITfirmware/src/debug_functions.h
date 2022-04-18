@@ -2,23 +2,34 @@
 void debug_SerialOutput() {
   Serial.printf(
       "-*-*-*-*-*-*-*-*-*-*-*-*-*-*-\n"
-      "ball visible:               %s\n"
-      "ball direction:             %02d\n"
-      "last ball directions (avg): %d\n"
-      "last ball directions:       [ %02d %02d %02d %02d %02d ]\n"
-      "got ball:                   %s\n\n"
+      "ball visible:       %s\n"
+      "ball direction:     %02d\n"
+      "got ball:           %s\n\n"
 
-      "goal visible:               %s\n"
-      "goal direction:             %d\n"
-      "compass:                    %d\n\n"
+      "goal visible:       %s\n"
+      "goal direction:     %d\n"
+      "compass:            %d\n\n"
 
-      "goal side:                  %d\n"
-      "corner timer:                  %d\n"
+      "goal side:          %d\n"
+      "corner timer:       %d\n"
       "-*-*-*-*-*-*-*-*-*-*-*-*-*-*-\n",
-      ballVisible ? "true" : "false", ballDirection, average(lastBallDirections, 5),
-      lastBallDirections[0], lastBallDirections[1], lastBallDirections[2], lastBallDirections[3],
-      lastBallDirections[4], gotBall ? "true" : "false", goalVisible ? "true" : "false",
-      goalDirection, igitBot.compass(), goalSide, cornerTimer);
+      ballVisible ? "true" : "false", ballDirection, gotBall ? "true" : "false",
+      goalVisible ? "true" : "false", goalDirection, igitBot.compass(), goalSide, cornerTimer);
+  SerialBT.printf(
+      "-*-*-*-*-*-*-*-*-*-*-*-*-*-*-\n"
+      "ball visible:       %s\n"
+      "ball direction:     %02d\n"
+      "got ball:           %s\n\n"
+
+      "goal visible:       %s\n"
+      "goal direction:     %d\n"
+      "compass:            %d\n\n"
+
+      "goal side:          %d\n"
+      "corner timer:       %d\n"
+      "-*-*-*-*-*-*-*-*-*-*-*-*-*-*-\n",
+      ballVisible ? "true" : "false", ballDirection, gotBall ? "true" : "false",
+      goalVisible ? "true" : "false", goalDirection, igitBot.compass(), goalSide, cornerTimer);
 }
 
 int debugCount = 0;

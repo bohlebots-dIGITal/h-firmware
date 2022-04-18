@@ -2,6 +2,7 @@
 #include "persistence.h"
 #include <CAN.h>
 #include <Pixy2I2C.h>
+#include "BluetoothSerial.h"
 #include "igit.h"
 #include "variables.h"
 #include "flash.h"
@@ -15,6 +16,9 @@ void setup() {
   while (!Serial)
     ;  // we dont seem to need that
   //  do nothing until there is a serial connection available.
+
+  SerialBT.begin("dIGITal");
+  SerialBT.println("lollololo");
 
   Serial.println("initialization of bot");
   igitBot.setBotType(4);  // our bot has four wheels
@@ -77,7 +81,7 @@ void loop() {
 
   // outputGamestate(&gamestate);
 
-  // debugOutput(3);  // prints important values (measured/calculated) to serial
+  debugOutput(20);  // prints important values (measured/calculated) to serial
   // monitor every nth loop run
 
   digitalWrite(LED_BUILTIN, LOW);

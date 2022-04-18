@@ -16,17 +16,11 @@ void action() {
   int direction = 0;
   int speed = 0;
   int turn = 0;
-  // bool shouldKick = false;
-
-  // shouldKick = (gotBall && goalDirection == 0); //only kick if goal is straight forward and bot
+  bool shouldKick =
+      (gotBall && goalDirection == 0);  // only kick if goal is straight forward and bot
   // has ball
 
   int whatWeWorkWith = ballDirection;
-  // if ball is invisible take the average of the last n directions the ball was
-  // if (!ballVisible) {
-  //   whatWeWorkWith =
-  //       average(lastBallDirections, sizeof(lastBallDirections) / sizeof(lastBallDirections[0]));
-  // }
 
   // aspired situation: drive with max speed to ball right in front of bot
   // clang-format off
@@ -56,40 +50,14 @@ void action() {
   } else {
     if (isInCorner()) {
       getOutOfCorner();
+    } else {
+      turn = -igitBot.compass() / 5;
     }
-    // if (cornerTimer > 1000 && abs(igitBot.compass()) < 20) {  // steht in ecke
-    //   if (goalSide == Right)
-    //     turn = 7;
-    //   else
-    //     turn = -7;
-    //   speed = 0;
-    //   direction = 0;
-    //   // direction:0, spd:0, turn:+/-7 => bot dreht sich auf der stelle richtung tor
-    // } else {  // nicht in ecke aber tor wird nicht gesehen
-    //   // speed = 40;
-    //   if (whatWeWorkWith == 0)
-    //     turn = 0;
-    //   else
-    //     turn = (-igitBot.compass() / 5) /*-(side(direction*2)*10)*/;
-    // }
   }
 
   igitBot.drive(direction, (speed * SPEED_PERCENT) / 100, turn);
-  /*
-    if (shouldKick) {
-      igitBot.kick(KICK_TIME);
-    }
-    */
-  if (ballVisible) {
-    // shift all array values left by one cell
-    size_t lastValuesLength = sizeof(lastBallDirections) / sizeof(int);
-
-    for (int i = 1; i < lastValuesLength; i++) {
-      lastBallDirections[i - 1] = lastBallDirections[i];
-    }
-
-    // set the most rightest value to the current ball direction
-    lastBallDirections[lastValuesLength - 1] = ballDirection;
+  if (shouldKick) {
+    igitBot.kick(KICK_TIME);
   }
 }
 
@@ -109,4 +77,4 @@ void getOutOfCorner() {
   }
 }
 
-bool isInCorner() { return (ballDirection == 0 && cornerTimer > 1000); }
+bool isInCorner() { return (ballDirection == 0 && cornerTimer > 1000 && gotBall); }
