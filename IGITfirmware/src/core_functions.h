@@ -25,7 +25,7 @@ void action() {
   // drive around enemy at start of game - bot has to be turned for it to work
   if (kickOff) {
     kickOff = false;
-    igitBot.drive(0, 75, goalDirection / -2);
+    igitBot.drive(0, 90, goalDirection / -2);
     igitBot.wait(500);
   } 
   else {
