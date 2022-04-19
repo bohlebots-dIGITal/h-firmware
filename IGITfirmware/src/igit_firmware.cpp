@@ -28,6 +28,7 @@ void setup() {
   pixy.init();
   Serial.println("pixy initialized");
 
+  EEPROM.begin(1000);
   getGamestate(&gamestate);  // do we still need that?
   head = gamestate.head;
 
@@ -47,13 +48,15 @@ void setup() {
 
   // rainbow
   int colors[] = {RED, YELLOW, GREEN, CYAN, BLUE};
-  for (int j = 0; j < 2; j++) {
-    for (int i = 0; i < 5; i++) {
-      igitBot.led(0, 1, colors[i]);
-      igitBot.led(0, 2, colors[i]);
-      igitBot.led(3, 1, colors[i]);
-      igitBot.led(3, 2, colors[i]);
-      igitBot.wait(100);
+  if (!gamestate.playing) {
+    for (int j = 0; j < 2; j++) {
+      for (int i = 0; i < 5; i++) {
+        igitBot.led(0, 1, colors[i]);
+        igitBot.led(0, 2, colors[i]);
+        igitBot.led(3, 1, colors[i]);
+        igitBot.led(3, 2, colors[i]);
+        igitBot.wait(70);
+      }
     }
   }
   igitBot.led(0, 1, OFF);
@@ -64,26 +67,20 @@ void setup() {
   igitBot.resetLEDs();
 
   igitBot.wait(1);  //
-  EEPROM.begin(1000);
 
   // if (!EEPROM.begin(EEPROM_SIZE)) Serial.println("EEPROM FAILED!!!");
 }
 
 void loop() {
   getData();  // reads out data from hardware
-  // writeFlash();
   if (gamestate.playing) {
-    // igitBot.drive(4, 100, 0);
-    igitBot.statusLEDs(ballVisible, gotBall, goalVisible, false);
+    igitBot.statusLEDs(ballVisible, gotBall, goalVisible, isInCorner());
     action();  // process data and act based on that
   } else
     igitBot.drive(0, 0, 0);
 
-  // outputGamestate(&gamestate);
-
   debugOutput(20);  // prints important values (measured/calculated) to serial
   // monitor every nth loop run
 
-  digitalWrite(LED_BUILTIN, LOW);
-  igitBot.wait(100);  // prevents that esp runs too fast for can, i2c, pixy, etc.
+  igitBot.wait(10);  // prevents that esp runs too fast for can, i2c, pixy, etc.
 }

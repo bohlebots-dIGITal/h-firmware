@@ -106,6 +106,8 @@ void readButton() {
       GameState oldGameState;
       getGamestate(&oldGameState);
 
+      igitBot.led(3,1, CYAN);
+
       if (oldGameState.head != gamestate.head) {
         setGamestate(&gamestate);
         outputGamestate(&gamestate);

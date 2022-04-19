@@ -16,7 +16,7 @@ void action() {
   int direction = 0;
   int speed = 0;
   int turn = 0;
-  bool shouldKick = (gotBall && goalDirection == 0 &&
+  bool shouldKick = (gotBall && abs(goalDirection) < 10 &&
                      goalVisible);  // only kick if goal is straight forward and bot
   // has ball
 
@@ -25,24 +25,23 @@ void action() {
   // drive around enemy at start of game - bot has to be turned for it to work
   if (kickOff) {
     kickOff = false;
-    // TODO: use compass if goalDirection isn't visible
-    igitBot.drive(0, 100, goalDirection / -2);
+    igitBot.drive(0, (100 * SPEED_PERCENT) / 100, -15);
 
-    igitBot.wait(500);
+    igitBot.wait(200);
   } else {
     // aspired situation: drive with max speed to ball right in front of bot
     // clang-format off
-  switch (abs(whatWeWorkWith)) {
-    case 0: direction = 0; speed = 100;  break;
-    case 1: direction = 2; speed = 60;   break; 
-    case 2: direction = 2; speed = 60;   break;
-    case 3: direction = 2; speed = 60;   break;
-    case 4: direction = 3; speed = 70;   break;
-    case 5: direction = 3; speed = 90;   break;
-    case 6: direction = 4; speed = 90;   break;
-    case 7: direction = 4; speed = 90;   break;
-    case 8: direction = -2; speed = 100; break;
-  }
+    switch (abs(whatWeWorkWith)) {
+      case 0: direction = 0; speed = 100;  break;
+      case 1: direction = 2; speed = 60;   break; 
+      case 2: direction = 2; speed = 60;   break;
+      case 3: direction = 2; speed = 60;   break;
+      case 4: direction = 3; speed = 70;   break;
+      case 5: direction = 3; speed = 90;   break;
+      case 6: direction = 4; speed = 90;   break;
+      case 7: direction = 4; speed = 90;   break;
+      case 8: direction = -2; speed = 100; break;
+    }
     // clang-format on
 
     if (whatWeWorkWith < 0) direction = -direction;
@@ -52,7 +51,7 @@ void action() {
     // steht er nicht in der ecke
     if (goalVisible) {
       cornerTimer = 0;
-      turn = goalDirection;  // wenn Pixy tor sieht in torrichtung drehen
+      turn = goalDirection * 0.75;  // wenn Pixy tor sieht in torrichtung drehen
     } else {
       if (isInCorner()) {
         getOutOfCorner();
@@ -72,15 +71,15 @@ void action() {
 }
 
 void getOutOfCorner() {
-  const int turnSpeed = 30;
+  const int turnSpeed = -30;
   if (goalSide == Direction::Right) {  // in left corner
     if (igitBot.compass() > -20) {
       SerialBT.printf("compass > -20\n");
-      igitBot.drive(0, 0, goalSide * turnSpeed);
+      igitBot.drive(0, 0, -goalSide * turnSpeed);
       // igitBot.motor(Wheel::BackLeft, singleWheelSpeed);
     } else {
       SerialBT.printf("compass <= -20\n");
-      igitBot.drive(0, 55, goalSide * turnSpeed);
+      igitBot.drive(0, 55, -goalSide * turnSpeed);
     }
   } else if (goalSide == Direction::Left) {
     if (igitBot.compass() < 20) {
