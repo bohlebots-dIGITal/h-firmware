@@ -16,8 +16,8 @@ void action() {
   int direction = 0;
   int speed = 0;
   int turn = 0;
-  bool shouldKick =
-      (gotBall && goalDirection == 0);  // only kick if goal is straight forward and bot
+  bool shouldKick = (gotBall && goalDirection == 0 &&
+                     goalVisible);  // only kick if goal is straight forward and bot
   // has ball
 
   int whatWeWorkWith = ballDirection;
@@ -34,10 +34,10 @@ void action() {
     // clang-format off
   switch (abs(whatWeWorkWith)) {
     case 0: direction = 0; speed = 100;  break;
-    case 1: direction = 2; speed = 50;   break; 
-    case 2: direction = 2; speed = 50;   break;
-    case 3: direction = 2; speed = 50;   break;
-    case 4: direction = 3; speed = 60;   break;
+    case 1: direction = 2; speed = 60;   break; 
+    case 2: direction = 2; speed = 60;   break;
+    case 3: direction = 2; speed = 60;   break;
+    case 4: direction = 3; speed = 70;   break;
     case 5: direction = 3; speed = 80;   break;
     case 6: direction = 4; speed = 80;   break;
     case 7: direction = 4; speed = 80;   break;
@@ -69,15 +69,16 @@ void action() {
 }
 
 void getOutOfCorner() {
+  const int speed = 30;
   if (side(goalDirection) == Direction::Right) {  // in left corner
     if (igitBot.compass() > -20) {
-      igitBot.drive(4, 35, side(goalDirection) * -15);
+      igitBot.drive(4, speed, side(goalDirection) * -15);
     } else {
       igitBot.drive(0, 55, side(goalDirection) * -15);
     }
   } else {
     if (igitBot.compass() < 20) {
-      igitBot.drive(4, 40, side(goalDirection) * -15);
+      igitBot.drive(4, speed, side(goalDirection) * -15);
     } else {
       igitBot.drive(0, 55, side(goalDirection) * -15);
     }
