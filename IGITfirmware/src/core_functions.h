@@ -38,9 +38,9 @@ void action() {
     case 2: direction = 2; speed = 60;   break;
     case 3: direction = 2; speed = 60;   break;
     case 4: direction = 3; speed = 70;   break;
-    case 5: direction = 3; speed = 80;   break;
-    case 6: direction = 4; speed = 80;   break;
-    case 7: direction = 4; speed = 80;   break;
+    case 5: direction = 3; speed = 90;   break;
+    case 6: direction = 4; speed = 90;   break;
+    case 7: direction = 4; speed = 90;   break;
     case 8: direction = -2; speed = 100; break;
   }
     // clang-format on
@@ -69,16 +69,20 @@ void action() {
 }
 
 void getOutOfCorner() {
-  const int speed = 30;
+  const int singleWheelSpeed = 70;
   if (side(goalDirection) == Direction::Right) {  // in left corner
     if (igitBot.compass() > -20) {
-      igitBot.drive(4, speed, side(goalDirection) * -15);
+      // igitBot.drive(4, speed, side(goalDirection) * -15);
+      igitBot.drive(0, 0, 0);
+      igitBot.motor(Wheel::BackLeft, singleWheelSpeed);
     } else {
       igitBot.drive(0, 55, side(goalDirection) * -15);
     }
   } else {
     if (igitBot.compass() < 20) {
-      igitBot.drive(4, speed, side(goalDirection) * -15);
+      // igitBot.drive(4, speed, side(goalDirection) * -15);
+      igitBot.drive(0, 0, 0);
+      igitBot.motor(Wheel::BackRight, -singleWheelSpeed);
     } else {
       igitBot.drive(0, 55, side(goalDirection) * -15);
     }

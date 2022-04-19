@@ -27,7 +27,8 @@ void readCan() {
   while (CAN.available()) {
     int irData = CAN.read();
     ballDirection = (irData / 16) - 7;
-    ballDir_drivable = (ballDirection + side(ballDirection)) / 2;  // bohlebots header just has directions -3 to 4 as drivable
+    ballDir_drivable = (ballDirection + side(ballDirection)) /
+                       2;  // bohlebots header just has directions -3 to 4 as drivable
     int zone = irData % 16;
 
     if (zone < 1)
@@ -44,7 +45,7 @@ void readPixy() {
     goalVisible = false;
     return;
   }
-  if (pixy.ccc.blocks[0].m_signature == signature) {
+  if (pixy.ccc.blocks[0].m_signature == gamestate.signature) {
     // signature 1 = goal we score on
     goalVisible = true;
     goalDirection = (pixy.ccc.blocks[0].m_x - 158) / 4;  // ERFAHRUNG
@@ -126,10 +127,12 @@ void readButton() {
     }
     case KeyCode::ToggleSignature: {
       if (signatureButtonTimer > 30 && !lastSignatureButton) {
-        if (signature == 1) {
-          signature = 2;
+        if (gamestate.signature == 1) {
+          gamestate.signature = 2;
+          setGamestate(&gamestate);
         } else {
-          signature = 1;
+          gamestate.signature = 1;
+          setGamestate(&gamestate);
         }
 
         signatureButtonTimer = 0;
@@ -139,7 +142,7 @@ void readButton() {
     case KeyCode::Shift: {
       igitBot.led(0, 1, kickOff ? GREEN : RED);
       igitBot.led(3, 1, CYAN);
-      igitBot.led(0, 2, signature == 1 ? YELLOW : BLUE);
+      igitBot.led(0, 2, gamestate.signature == 1 ? YELLOW : BLUE);
       igitBot.led(3, 2, WHITE);
       break;
     }

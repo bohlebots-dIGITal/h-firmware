@@ -36,6 +36,4 @@ bool lastSignatureButton = false;
 
 #define KICK_TIME 20
 
-int signature = 1;
-
 BluetoothSerial SerialBT;

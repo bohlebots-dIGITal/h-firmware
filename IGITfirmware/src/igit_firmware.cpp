@@ -5,7 +5,6 @@
 #include "BluetoothSerial.h"
 #include "igit.h"
 #include "variables.h"
-#include "flash.h"
 #include "helper_functions.h"
 #include "core_functions.h"
 #include "debug_functions.h"
@@ -65,8 +64,9 @@ void setup() {
   igitBot.resetLEDs();
 
   igitBot.wait(1);  //
+  EEPROM.begin(1000);
 
-  if (!EEPROM.begin(EEPROM_SIZE)) Serial.println("EEPROM FAILED!!!");
+  // if (!EEPROM.begin(EEPROM_SIZE)) Serial.println("EEPROM FAILED!!!");
 }
 
 void loop() {
@@ -79,11 +79,11 @@ void loop() {
   } else
     igitBot.drive(0, 0, 0);
 
-  // outputGamestate(&gamestate);
+  outputGamestate(&gamestate);
 
-  debugOutput(20);  // prints important values (measured/calculated) to serial
+  // debugOutput(20);  // prints important values (measured/calculated) to serial
   // monitor every nth loop run
 
   digitalWrite(LED_BUILTIN, LOW);
-  igitBot.wait(10);  // prevents that esp runs too fast for can, i2c, pixy, etc.
+  igitBot.wait(100);  // prevents that esp runs too fast for can, i2c, pixy, etc.
 }

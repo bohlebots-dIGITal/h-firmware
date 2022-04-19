@@ -94,6 +94,8 @@ enum KeyCode {
   None
 };
 
+enum Wheel { FrontRight = 1, BackRight = 2, BackLeft = 3, FrontLeft = 4 };
+
 class IGITBot {
  public:
   IGITBot() {
