@@ -21,7 +21,7 @@ int lastBallDirections[5] = {0, 0, 0, 0, 0};
 
 GameState gamestate;
 
-enum Direction { Right, Left };
+enum Direction { Right = 1, Left = -1 };
 
 Direction goalSide;
 

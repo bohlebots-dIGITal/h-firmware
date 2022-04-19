@@ -1,3 +1,4 @@
+const char* boolToString(bool);
 
 void debug_SerialOutput() {
   Serial.printf(
@@ -26,15 +27,18 @@ void debug_SerialOutput() {
       "compass:            %d\n\n"
 
       "goal side:          %d\n"
+      "side(goalDir):      %d\n"
       "corner timer:       %d\n"
+      "in corner:          %s\n"
       "-*-*-*-*-*-*-*-*-*-*-*-*-*-*-\n",
       ballVisible ? "true" : "false", ballDirection, gotBall ? "true" : "false",
-      goalVisible ? "true" : "false", goalDirection, igitBot.compass(), goalSide, cornerTimer);
+      goalVisible ? "true" : "false", goalDirection, igitBot.compass(), goalSide,
+      side(goalDirection), (int)cornerTimer, boolToString(isInCorner()));
 }
 
 int debugCount = 0;
 
-void debugOutput(const int &n) {
+void debugOutput(const int& n) {
   // prints out debug info every n loop runs
   if (n <= 0) return;
   ++debugCount;
@@ -81,4 +85,11 @@ void motorTest() {
   igitBot.motor(3, 0);
   igitBot.motor(4, 50);
   delay(10000);
+}
+
+const char* boolToString(bool a) {
+  if (a)
+    return "true";
+  else
+    return "false";
 }

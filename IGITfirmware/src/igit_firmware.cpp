@@ -79,9 +79,9 @@ void loop() {
   } else
     igitBot.drive(0, 0, 0);
 
-  outputGamestate(&gamestate);
+  // outputGamestate(&gamestate);
 
-  // debugOutput(20);  // prints important values (measured/calculated) to serial
+  debugOutput(20);  // prints important values (measured/calculated) to serial
   // monitor every nth loop run
 
   digitalWrite(LED_BUILTIN, LOW);

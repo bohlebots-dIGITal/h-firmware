@@ -56,36 +56,45 @@ void action() {
     } else {
       if (isInCorner()) {
         getOutOfCorner();
+        return;
       } else {
         turn = -igitBot.compass() / 5;
       }
     }
 
-    igitBot.drive(direction, (speed * SPEED_PERCENT) / 100, turn);
-    if (shouldKick) {
-      igitBot.kick(KICK_TIME);
+    if (!isInCorner()) {
+      igitBot.drive(direction, (speed * SPEED_PERCENT) / 100, turn);
+      if (shouldKick) {
+        igitBot.kick(KICK_TIME);
+      }
     }
   }
 }
 
 void getOutOfCorner() {
-  const int singleWheelSpeed = 70;
-  if (side(goalDirection) == Direction::Right) {  // in left corner
+  const int turnSpeed = 30;
+  if (goalSide == Direction::Right) {  // in left corner
     if (igitBot.compass() > -20) {
-      // igitBot.drive(4, speed, side(goalDirection) * -15);
-      igitBot.drive(0, 0, 0);
-      igitBot.motor(Wheel::BackLeft, singleWheelSpeed);
+      SerialBT.printf("compass > -20\n");
+      igitBot.drive(0, 0, goalSide * turnSpeed);
+      // igitBot.motor(Wheel::BackLeft, singleWheelSpeed);
     } else {
-      igitBot.drive(0, 55, side(goalDirection) * -15);
+      SerialBT.printf("compass <= -20\n");
+      igitBot.drive(0, 55, goalSide * turnSpeed);
+    }
+  } else if (goalSide == Direction::Left) {
+    if (igitBot.compass() < 20) {
+      SerialBT.printf("compass < 20\n");
+      igitBot.drive(0, 0, goalSide * turnSpeed);
+      // igitBot.drive(0, 0, 0);
+      // igitBot.motor(Wheel::BackRight, -singleWheelSpeed);
+    } else {
+      SerialBT.printf("compass >= 20\n");
+      igitBot.drive(0, 55, goalSide * turnSpeed);
     }
   } else {
-    if (igitBot.compass() < 20) {
-      // igitBot.drive(4, speed, side(goalDirection) * -15);
-      igitBot.drive(0, 0, 0);
-      igitBot.motor(Wheel::BackRight, -singleWheelSpeed);
-    } else {
-      igitBot.drive(0, 55, side(goalDirection) * -15);
-    }
+    // if in center
+    igitBot.drive(0, 0, turnSpeed);
   }
 }
 
