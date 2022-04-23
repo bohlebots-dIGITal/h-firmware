@@ -9,6 +9,7 @@ int ballDirection = 0;
 int ballDir_drivable = 0;
 
 bool goalVisible = false;
+bool ownGoalVisible = false;
 int goalDirection = 0;
 int goalDist = 0;
 
@@ -36,4 +37,4 @@ bool lastSignatureButton = false;
 
 #define KICK_TIME 20
 
-BluetoothSerial SerialBT;
+// BluetoothSerial SerialBT;

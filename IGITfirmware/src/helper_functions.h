@@ -48,24 +48,24 @@ void readPixy() {
   if (pixy.ccc.blocks[0].m_signature == gamestate.signature) {
     // signature 1 = goal we score on
     goalVisible = true;
+    ownGoalVisible = false;
     goalDirection = (pixy.ccc.blocks[0].m_x - 158) / 4;  // ERFAHRUNG
     goalDist = pixy.ccc.blocks[0].m_y;
 
-    if (goalDirection > 0) {
-      goalSide = Right;
-    } else {
-      goalSide = Left;
-    }
-
     // Serial.println("dist: "+String(goalDist));
-  }
-  // goal not seen
-  else {
+  } else {
+    ownGoalVisible = true;
     goalVisible = false;
     // wire stuff is in pixy2 example
     Wire.beginTransmission(0x27);
     Wire.write(255 - 2);
     Wire.endTransmission();
+  }
+
+  if (goalDirection > 0) {
+    goalSide = Right;
+  } else {
+    goalSide = Left;
   }
 }
 
@@ -106,7 +106,7 @@ void readButton() {
       GameState oldGameState;
       getGamestate(&oldGameState);
 
-      igitBot.led(3,1, CYAN);
+      igitBot.led(3, 1, CYAN);
 
       if (oldGameState.head != gamestate.head) {
         setGamestate(&gamestate);

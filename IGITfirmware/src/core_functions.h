@@ -16,7 +16,7 @@ void action() {
   int direction = 0;
   int speed = 0;
   int turn = 0;
-  bool shouldKick = (gotBall && abs(goalDirection) < 10 &&
+  bool shouldKick = (gotBall && abs(goalDirection) < 20 &&
                      goalVisible);  // only kick if goal is straight forward and bot
   // has ball
 
@@ -36,10 +36,10 @@ void action() {
       case 1: direction = 2; speed = 60;   break; 
       case 2: direction = 2; speed = 60;   break;
       case 3: direction = 2; speed = 60;   break;
-      case 4: direction = 3; speed = 70;   break;
-      case 5: direction = 3; speed = 90;   break;
-      case 6: direction = 4; speed = 90;   break;
-      case 7: direction = 4; speed = 90;   break;
+      case 4: direction = 3; speed = 60;   break;
+      case 5: direction = 3; speed = 80;   break;
+      case 6: direction = 4; speed = 80;   break;
+      case 7: direction = 4; speed = 80;   break;
       case 8: direction = -2; speed = 100; break;
     }
     // clang-format on
@@ -51,7 +51,9 @@ void action() {
     // steht er nicht in der ecke
     if (goalVisible) {
       cornerTimer = 0;
-      turn = goalDirection * 0.75;  // wenn Pixy tor sieht in torrichtung drehen
+      turn = goalDirection * 0.9;  // wenn Pixy tor sieht in torrichtung drehen
+    } else if (ownGoalVisible) {
+      turn = 40;
     } else {
       if (isInCorner()) {
         getOutOfCorner();
@@ -74,21 +76,21 @@ void getOutOfCorner() {
   const int turnSpeed = -30;
   if (goalSide == Direction::Right) {  // in left corner
     if (igitBot.compass() > -20) {
-      SerialBT.printf("compass > -20\n");
+      // SerialBT.printf("compass > -20\n");
       igitBot.drive(0, 0, -goalSide * turnSpeed);
       // igitBot.motor(Wheel::BackLeft, singleWheelSpeed);
     } else {
-      SerialBT.printf("compass <= -20\n");
+      // SerialBT.printf("compass <= -20\n");
       igitBot.drive(0, 55, -goalSide * turnSpeed);
     }
   } else if (goalSide == Direction::Left) {
     if (igitBot.compass() < 20) {
-      SerialBT.printf("compass < 20\n");
+      // SerialBT.printf("compass < 20\n");
       igitBot.drive(0, 0, goalSide * turnSpeed);
       // igitBot.drive(0, 0, 0);
       // igitBot.motor(Wheel::BackRight, -singleWheelSpeed);
     } else {
-      SerialBT.printf("compass >= 20\n");
+      // SerialBT.printf("compass >= 20\n");
       igitBot.drive(0, 55, goalSide * turnSpeed);
     }
   } else {

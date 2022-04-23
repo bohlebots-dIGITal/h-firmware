@@ -2,7 +2,7 @@
 #include "persistence.h"
 #include <CAN.h>
 #include <Pixy2I2C.h>
-#include "BluetoothSerial.h"
+// #include "BluetoothSerial.h"
 #include "igit.h"
 #include "variables.h"
 #include "helper_functions.h"
@@ -16,8 +16,8 @@ void setup() {
     ;  // we dont seem to need that
   //  do nothing until there is a serial connection available.
 
-  SerialBT.begin("dIGITal");
-  SerialBT.println("lollololo");
+  // SerialBT.begin("dIGITal");
+  // SerialBT.println("lollololo");
 
   Serial.println("initialization of bot");
   igitBot.setBotType(4);  // our bot has four wheels

@@ -16,24 +16,24 @@ void debug_SerialOutput() {
       "-*-*-*-*-*-*-*-*-*-*-*-*-*-*-\n",
       ballVisible ? "true" : "false", ballDirection, gotBall ? "true" : "false",
       goalVisible ? "true" : "false", goalDirection, igitBot.compass(), goalSide, cornerTimer);
-  SerialBT.printf(
-      "-*-*-*-*-*-*-*-*-*-*-*-*-*-*-\n"
-      "ball visible:       %s\n"
-      "ball direction:     %02d\n"
-      "got ball:           %s\n\n"
+  // SerialBT.printf(
+  //     "-*-*-*-*-*-*-*-*-*-*-*-*-*-*-\n"
+  //     "ball visible:       %s\n"
+  //     "ball direction:     %02d\n"
+  //     "got ball:           %s\n\n"
 
-      "goal visible:       %s\n"
-      "goal direction:     %d\n"
-      "compass:            %d\n\n"
+  //     "goal visible:       %s\n"
+  //     "goal direction:     %d\n"
+  //     "compass:            %d\n\n"
 
-      "goal side:          %d\n"
-      "side(goalDir):      %d\n"
-      "corner timer:       %d\n"
-      "in corner:          %s\n"
-      "-*-*-*-*-*-*-*-*-*-*-*-*-*-*-\n",
-      ballVisible ? "true" : "false", ballDirection, gotBall ? "true" : "false",
-      goalVisible ? "true" : "false", goalDirection, igitBot.compass(), goalSide,
-      side(goalDirection), (int)cornerTimer, boolToString(isInCorner()));
+  //     "goal side:          %d\n"
+  //     "side(goalDir):      %d\n"
+  //     "corner timer:       %d\n"
+  //     "in corner:          %s\n"
+  //     "-*-*-*-*-*-*-*-*-*-*-*-*-*-*-\n",
+  //     ballVisible ? "true" : "false", ballDirection, gotBall ? "true" : "false",
+  //     goalVisible ? "true" : "false", goalDirection, igitBot.compass(), goalSide,
+  //     side(goalDirection), (int)cornerTimer, boolToString(isInCorner()));
 }
 
 int debugCount = 0;
