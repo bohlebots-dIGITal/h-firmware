@@ -35,8 +35,8 @@ void action() {
       case 0: direction = 0; speed = 100;  break;
       case 1: direction = 2; speed = 60;   break; 
       case 2: direction = 2; speed = 60;   break;
-      case 3: direction = 2; speed = 60;   break;
-      case 4: direction = 3; speed = 60;   break;
+      case 3: direction = 2; speed = 53;   break;
+      case 4: direction = 3; speed = 53;   break;
       case 5: direction = 3; speed = 80;   break;
       case 6: direction = 4; speed = 80;   break;
       case 7: direction = 4; speed = 80;   break;
